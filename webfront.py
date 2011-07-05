@@ -51,7 +51,7 @@ class MainHandler(tornado.web.RequestHandler):
         for png in hashlist:
             img = Image.open(png) 
             robohash.paste(img,(0,0),img)
-        robohash.save("/opt/robohash/static/images/out.png")
+        robohash.save("static/images/out.png")
         self.write("Running in Random mode:<br>")
         self.write("<img src='/images/out.png'>")
 
