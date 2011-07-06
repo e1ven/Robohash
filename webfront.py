@@ -16,11 +16,13 @@ import Image
 import hashlib
 import urllib
 import random 
+from tornado.options import define, options
 try: 
    from hashlib import md5 as md5_func
 except ImportError:
    from md5 import new as md5_func
 
+define("port", default=80, help="run on the given port", type=int)
 
 class Robohash(object):
    def __init__(self,string):
@@ -135,15 +137,33 @@ class ImgHandler(tornado.web.RequestHandler):
             robohash = Image.merge("RGB", (r, g, b))
         robohash.save(self,format=ext)
 
-application = tornado.web.Application([
-    (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
-    "static/")}),
 
-    (r"/", MainHandler),
-    (r"/(.*)", ImgHandler),
 
-])
+
+
+def main():
+    tornado.options.parse_command_line()
+    # timeout in seconds
+    timeout = 10
+    socket.setdefaulttimeout(timeout)
+
+    settings = {
+    "static_path": os.path.join(os.path.dirname(__file__), "static"),
+    "cookie_secret": "9b90a85cfe46cad5ec136ee44a3fa332",
+    "login_url": "/login",
+    "xsrf_cookies": True,
+    }
+
+    application = tornado.web.Application([
+        (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
+        "static/")}),
+        (r"/", MainHandler),
+        (r"/(.*)", ImgHandler),
+    ], **settings)
+
+    http_server = tornado.httpserver.HTTPServer(application)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
-    application.listen(8080)
-    tornado.ioloop.IOLoop.instance().start()
+    main()
