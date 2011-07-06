@@ -95,22 +95,24 @@ class ImgHandler(tornado.web.RequestHandler):
         r.createHashes(10)
         
         
+                
         #Now, customize the request if possible.
         client_color = ""
-        if "color" in self.request.arguments:
-                if self.get_argument("color") in colors:
-                    client_set = tornado.escape.xhtml_escape(self.get_argument("color"))
-                    
-        #If they don't specify a color, use hashvalue        
-        if client_color == "":
-            client_set = colors[r.hasharray[0] % len(colors) ]
-          
+        client_set = ""
         if "set" in self.request.arguments:
                 if self.get_argument("set") in sets:
                     client_set =  tornado.escape.xhtml_escape(self.get_argument("set"))   
                     #Set one is distributed     
                     if client_set == 'set1':
                         client_set = colors[r.hasharray[0] % len(colors) ]
+
+        if "color" in self.request.arguments:
+                if self.get_argument("color") in colors:
+                    client_set = tornado.escape.xhtml_escape(self.get_argument("color"))
+
+        #If they don't specify a color, use hashvalue        
+        if ((client_color == "") and (client_set == "")):
+            client_set = colors[r.hasharray[0] % len(colors) ]
         
         
         #Change to a usuable format
