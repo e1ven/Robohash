@@ -10,7 +10,6 @@ import tornado.web
 import tornado.escape
 import socket
 import re
-import robohash
 import os
 import pprint
 import Image
