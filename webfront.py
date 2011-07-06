@@ -29,7 +29,8 @@ class Robohash(object):
        hash.update(string)
        self.hexdigest = hash.hexdigest()
        self.hasharray = []
-
+       self.iter = 0
+       
    def createHashes(self,count):
        #Create and store a series of hash-values
        #Basically, split up a hash (SHA/md5/etc) into X parts
@@ -44,34 +45,30 @@ class Robohash(object):
        #return the count of just the directories beneath me.
        return sum([len(dirs) for (root, dirs, files) in os.walk(path)])
 
-   def getHashList(self,map):
-       #Kinda a complicated function. 
-       #Basically, we're recursively calling ourselves, and keeping track of the depth
-       #Since we use two return values, we're storing them in a map.
+   def getHashList(self,path):
        #Each iteration, if we hit a directory, recurse
        #If not, choose the appropriate file, given the hashes, stored above
-       path = map['path']
-       depth = map['depth']
        completelist = []
        locallist = []
        for ls in os.listdir(path):
            if not ls.startswith("."):
                if os.path.isdir(path + "/" + ls):
-                   returnval = self.getHashList({'path': path + "/" + ls ,'depth': depth + 1})
-                   subfiles = returnval['completelist']
+                   subfiles  = self.getHashList(path + "/" + ls)
                    if subfiles is not None:
                        completelist = completelist + subfiles
                else:
                    locallist.append( path + "/" + ls)
 
        if len(locallist) > 0:
-           elementchoice = self.hasharray[map['depth']] % len (locallist)
+           elementchoice = self.hasharray[self.iter] % len(locallist)
            luckyelement = locallist[elementchoice]
            locallist = []
            locallist.append(luckyelement)    
+           self.iter += 1
+           
 
        completelist = completelist + locallist   
-       return {'completelist':completelist,'depth':depth}
+       return completelist
 
 
 
@@ -98,9 +95,8 @@ class ImgHandler(tornado.web.RequestHandler):
         else:
             ext = "png"
         self.set_header("Content-Type", "image/" + ext)
-        hashlist = r.getHashList({'path':"blue",'depth':0})['completelist']
+        hashlist = r.getHashList("blue")
         hashlist.sort()
-        pprint.pprint(hashlist)
         robohash = Image.open(hashlist[0])
         for png in hashlist:
             img = Image.open(png) 

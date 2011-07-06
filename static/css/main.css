@@ -259,6 +259,16 @@ img.right {
 	padding:2px 0 0 0;
 	}
 	
+a {
+	font-family:MyriadProRegular, Helvetica, sans-serif;
+	font-size:20px;
+	color: #c1c1c1;
+	font-style:italic;
+	text-decoration:none;
+	}
+
+
+	
 ul {
 	margin:0;
 	padding: 0;
@@ -316,6 +326,8 @@ li {
 	margin: 0 auto;
 	width: 960px;
 }
+	
+	
 	
 .follow a {
 	font-family:MyriadProRegular, Helvetica, sans-serif;
