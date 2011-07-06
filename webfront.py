@@ -16,7 +16,7 @@ import pprint
 import Image
 import hashlib
 import urllib
-
+import random 
 try: 
    from hashlib import md5 as md5_func
 except ImportError:
@@ -29,8 +29,8 @@ class Robohash(object):
        hash.update(string)
        self.hexdigest = hash.hexdigest()
        self.hasharray = []
-       self.iter = 0
-       
+       self.iter = 1
+                     
    def createHashes(self,count):
        #Create and store a series of hash-values
        #Basically, split up a hash (SHA/md5/etc) into X parts
@@ -48,6 +48,7 @@ class Robohash(object):
    def getHashList(self,path):
        #Each iteration, if we hit a directory, recurse
        #If not, choose the appropriate file, given the hashes, stored above
+       
        completelist = []
        locallist = []
        for ls in os.listdir(path):
@@ -79,13 +80,39 @@ class MainHandler(tornado.web.RequestHandler):
 
 class ImgHandler(tornado.web.RequestHandler):
     def get(self,string=None):
+        
+        colors = ['blue','brown','green','grey','orange','pink','purple','red','white','yellow']
+        sets = ['set1','set2','set3']
+        
         self.content_type = 'application/json'
         #Create a hash for the string as given
         if string is None:
             string = self.request.remote_ip
         string = urllib.quote_plus(string)
         r = Robohash(string)
-        r.createHashes(r.dirCount("blue"))
+          
+        #Create 10 hashes. This should be long enough for the current crop of variables.
+        #This is probably not insecure, sicne we'd be modding anyway. This just spreads it out more.
+        r.createHashes(10)
+        
+        
+        #Now, customize the request if possible.
+        client_color = ""
+        if "color" in self.request.arguments:
+                if self.get_argument("color") in colors:
+                    client_set = tornado.escape.xhtml_escape(self.get_argument("color"))
+                    
+        #If they don't specify a color, use hashvalue        
+        if client_color == "":
+            client_set = colors[r.hasharray[0] % len(colors) ]
+          
+        if "set" in self.request.arguments:
+                if self.get_argument("set") in sets:
+                    client_set =  tornado.escape.xhtml_escape(self.get_argument("set"))   
+                    #Set one is distributed     
+                    if client_set == 'set1':
+                        client_set = colors[r.hasharray[0] % len(colors) ]
+        
         
         #Change to a usuable format
         if string.endswith(('.png','.gif','.jpg','bmp','im','jpeg','pcx','ppm','tiff','xbm')):
@@ -95,7 +122,7 @@ class ImgHandler(tornado.web.RequestHandler):
         else:
             ext = "png"
         self.set_header("Content-Type", "image/" + ext)
-        hashlist = r.getHashList("blue")
+        hashlist = r.getHashList(client_set)
         hashlist.sort()
         robohash = Image.open(hashlist[0])
         for png in hashlist:
@@ -106,8 +133,6 @@ class ImgHandler(tornado.web.RequestHandler):
             r, g, b, a = robohash.split()
             robohash = Image.merge("RGB", (r, g, b))
         robohash.save(self,format=ext)
-        # self.write("Running in Random mode:<br>")
-        # self.write("<img src='/images/" + string + "'>")
 
 application = tornado.web.Application([
     (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),

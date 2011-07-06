@@ -239,22 +239,80 @@ $(document).ready(function(){
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. </p>
   
   <ul class="gallery">
-			{% set c1 = '/'.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + ".png" %}
-			{% set c2 = '/'.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "1.png" %}
-			{% set c3 = '/'.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "2.png" %}
-			{% set c4 = '/'.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "3.png" %}
-			{% set c5 = '/'.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "4.png" %}
+			{% set c1 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + ".png" %}
+			{% set c2 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "1.png" %}
+			{% set c3 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "2.png" %}
+			{% set c4 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "3.png" %}
+			{% set c5 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "4.png" %}
 			
-			<li><a href="{{c1}}" rel="prettyPhoto[gallery1]" title="This character is awesome, and so are you." class="fade"><img src="{{c1}}" width="154" height="101" alt="Some great title" /></a></li>
-			<li><a href="{{c2}}" rel="prettyPhoto[gallery1]" title="I think he thinks you're cute." class="fade"><img src="{{c2}}" width="154" height="101" alt="Some great title" /></a></li>
-            <li><a href="{{c3}}" rel="prettyPhoto[gallery1]" title="Any robot you don't click on, we dismantle." class="fade"><img src="{{c3}}" width="154" height="101" alt="Some great title" /></a></li>
-            <li><a href="{{c4}}" rel="prettyPhoto[gallery1]" title="Robot tears taste like candy." class="fade"><img src="{{c4}}" width="154" height="101" alt="Some great title" /></a></li>
-            <li><a href="{{c5}}" rel="prettyPhoto[gallery1]" title="01010010010011110100001001001111010101000101001100100001!" class="fade"><img src="{{c5}}" width="154" height="101" alt="Some great title" /></a></li>
+			<li><a href="{{c1}}" rel="prettyPhoto[gallery1]" title="This character is awesome, and so are you." class="fade"><img src="{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
+			<li><a href="{{c2}}" rel="prettyPhoto[gallery1]" title="I think he thinks you're cute." class="fade"><img src="{{c2}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c3}}" rel="prettyPhoto[gallery1]" title="Any robot you don't click on, we dismantle." class="fade"><img src="{{c3}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c4}}" rel="prettyPhoto[gallery1]" title="Robot tears taste like candy." class="fade"><img src="{{c4}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c5}}" rel="prettyPhoto[gallery1]" title="01010010010011110100001001001111010101000101001100100001!" class="fade"><img src="{{c5}}" width="150" height="150" alt="Some great title" /></a></li>
 	</ul>
 
 </div><!-- end of content section -->
 
 <div class="hr"></div>
+
+
+<!-- *************************************************************************
+******************************  GALLERY2 SECTION  *****************************
+************************************************************************** -->
+
+<!-- start of content section -->
+<div class="content_section">
+ 
+  <p>By appending ?set=set2 to our URL, we are able to generate a whole slew of Random monsters. Here are 5 we picked out for you.  </p>
+  
+  <ul class="gallery">
+			{% set c1 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + ".png?set=set2" %}
+			{% set c2 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "1.png?set=set2" %}
+			{% set c3 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "2.png?set=set2" %}
+			{% set c4 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "3.png?set=set2" %}
+			{% set c5 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "4.png?set=set2" %}
+			
+			<li><a href="{{c1}}" rel="prettyPhoto[gallery1]" title="This character is awesome, and so are you." class="fade"><img src="{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
+			<li><a href="{{c2}}" rel="prettyPhoto[gallery1]" title="I think he thinks you're cute." class="fade"><img src="{{c2}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c3}}" rel="prettyPhoto[gallery1]" title="Any robot you don't click on, we dismantle." class="fade"><img src="{{c3}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c4}}" rel="prettyPhoto[gallery1]" title="Robot tears taste like candy." class="fade"><img src="{{c4}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c5}}" rel="prettyPhoto[gallery1]" title="01010010010011110100001001001111010101000101001100100001!" class="fade"><img src="{{c5}}" width="150" height="150" alt="Some great title" /></a></li>
+	</ul>
+
+</div><!-- end of content section -->
+
+<div class="hr"></div>
+
+
+<!-- *************************************************************************
+******************************  GALLERY3 SECTION  *****************************
+************************************************************************** -->
+
+<!-- start of content section -->
+<div class="content_section">
+ 
+  <p>By appending ?set=set3 to our URL, we get back to robots. New, suave, Giant-Head robots </p>
+  
+  <ul class="gallery">
+			{% set c1 = '/' +  ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + ".png?set=set3" %}
+			{% set c2 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "1.png?set=set3" %}
+			{% set c3 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "2.png?set=set3" %}
+			{% set c4 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "3.png?set=set3" %}
+			{% set c5 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "4.png?set=set3" %}
+			
+			<li><a href="{{c1}}" rel="prettyPhoto[gallery1]" title="This character is awesome, and so are you." class="fade"><img src="{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
+			<li><a href="{{c2}}" rel="prettyPhoto[gallery1]" title="I think he thinks you're cute." class="fade"><img src="{{c2}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c3}}" rel="prettyPhoto[gallery1]" title="Any robot you don't click on, we dismantle." class="fade"><img src="{{c3}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c4}}" rel="prettyPhoto[gallery1]" title="Robot tears taste like candy." class="fade"><img src="{{c4}}" width="150" height="150" alt="Some great title" /></a></li>
+            <li><a href="{{c5}}" rel="prettyPhoto[gallery1]" title="01010010010011110100001001001111010101000101001100100001!" class="fade"><img src="{{c5}}" width="150" height="150" alt="Some great title" /></a></li>
+	</ul>
+
+</div><!-- end of content section -->
+
+<div class="hr"></div>
+
+
 
 
 
