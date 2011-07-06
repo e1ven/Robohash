@@ -75,7 +75,10 @@ class Robohash(object):
 
 
 
-
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        ip = self.request.remote_ip
+        self.write(self.render_string('templates/root.html',ip=ip))
 
 class ImgHandler(tornado.web.RequestHandler):
     def get(self,string=None):
@@ -90,6 +93,8 @@ class ImgHandler(tornado.web.RequestHandler):
         #Change to a usuable format
         if string.endswith(('.png','.gif','.jpg','bmp','im','jpeg','pcx','ppm','tiff','xbm')):
             ext = string[string.rfind('.') +1 :len(string)] 
+            if ext == '.jpg':
+                ext = '.jpeg'            
         else:
             ext = "png"
         self.set_header("Content-Type", "image/" + ext)
@@ -100,15 +105,19 @@ class ImgHandler(tornado.web.RequestHandler):
         for png in hashlist:
             img = Image.open(png) 
             robohash.paste(img,(0,0),img)
+        if ext == 'bmp':
+            #Flatten bmps
+            r, g, b, a = robohash.split()
+            robohash = Image.merge("RGB", (r, g, b))
         robohash.save(self,format=ext)
         # self.write("Running in Random mode:<br>")
         # self.write("<img src='/images/" + string + "'>")
 
 application = tornado.web.Application([
-    (r"/images/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
-    "static/images")}),
+    (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
+    "static/")}),
 
-    (r"/", ImgHandler),
+    (r"/", MainHandler),
     (r"/(.*)", ImgHandler),
 
 ])
