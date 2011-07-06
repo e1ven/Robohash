@@ -161,7 +161,7 @@ def main():
         (r"/(.*)", ImgHandler),
     ], **settings)
 
-    http_server = tornado.httpserver.HTTPServer(application)
+    http_server = tornado.httpserver.HTTPServer(application,xheaders=True)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
 
