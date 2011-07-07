@@ -245,9 +245,8 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 <div class="content_section">
 
  <div class="section_title">Here are five Robots, Randomly generated, Just for you!</div>
- 
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. </p>
-  
+  			{% set quotes = ['But.. I love you!','Please don\'t leave the site.. When no one\'s here.. It gets dark...', 'Script error on line 148', 'Don\'t trust the other robots. I\'m the only trustworthy one.', 'My fuel is the misery of children. And Rum. Mostly Rum.', 'When they said they\'d give me a body transplant, I didn\'t think they meant this!', 'Subject 14 has had it\'s communication subroutines deleted for attempting suicide.', 'I am the cleverest robot on the whole page.', 'Oil can', 'I am fleunt in over 6 million forms of communishin.', 'I see a little silhouette of a bot..', 'I WANT MY HANDS BACK!', 'Please don\'t reload, I\'ll DIE!', 'Robots don\'t have souls, you know. But they do feel pain.', 'I wonder what would happen if all the robots went rogue.', '10: KILL ALL HUMANS. 20: GO 10', 'I\'m the best robot here.', 'The green robot thinks you\'re cute.', 'Any robot you don\'t click on, we dismantle.', 'Robot tears taste like candy.', '01010010010011110100001001001111010101000101001100100001!', 'Your mouse cursor tickles.', 'Logic dictates placing me on your site.', 'I think my arm is on backward.',  'I\'m different!',  'It was the best of times, it was ಠ_ಠ the of times.', 'String is Gnirts spelled backward, you know', 'We\'re no strangers to hashing.. You know the 3 rules, and so do I..', 'Please. Destroy. Me...', 'Pick Me! Pick Me!'] %} 
+
   <ul class="gallery">
 			{% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
 			{% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
@@ -255,17 +254,12 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
 			{% set c5 =  ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
 			
-			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="This character is
-            awesome, and so are you." class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
-			<li><a href="http://static1.robohash.com/{{c2}}" rel="prettyPhoto[gallery1]" title="I think he thinks you're
-            cute." class="fade"><img src="http://static1.robohash.com/{{c2}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c3}}" rel="prettyPhoto[gallery1]" title="Any robot you don't
-            click on, we dismantle." class="fade"><img src="http://static1.robohash.com/{{c3}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c4}}" rel="prettyPhoto[gallery1]" title="Robot tears taste like
-            candy." class="fade"><img src="http://static1.robohash.com/{{c4}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c5}}" rel="prettyPhoto[gallery1]"
-            title="01010010010011110100001001001111010101000101001100100001!" class="fade"><img
-            src="http://static1.robohash.com/{{c5}}" width="150" height="150" alt="Some great title" /></a></li>
+			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150"/></a></li>
+			<li><a href="http://static1.robohash.com/{{c2}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c2}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c3}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c3}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c4}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c4}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c5}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img
+            src="http://static1.robohash.com/{{c5}}" width="150" height="150" /></a></li>
 	</ul>
 
 </div><!-- end of content section -->
@@ -289,17 +283,12 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
 			{% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
 			
-			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="This character is
-            awesome, and so are you." class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
-			<li><a href="http://static1.robohash.com/{{c2}}" rel="prettyPhoto[gallery1]" title="I think he thinks you're
-            cute." class="fade"><img src="http://static1.robohash.com/{{c2}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c3}}" rel="prettyPhoto[gallery1]" title="Any robot you don't
-            click on, we dismantle." class="fade"><img src="http://static1.robohash.com/{{c3}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c4}}" rel="prettyPhoto[gallery1]" title="Robot tears taste like
-            candy." class="fade"><img src="http://static1.robohash.com/{{c4}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c5}}" rel="prettyPhoto[gallery1]"
-            title="01010010010011110100001001001111010101000101001100100001!" class="fade"><img
-            src="http://static1.robohash.com/{{c5}}" width="150" height="150" alt="Some great title" /></a></li>
+			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" /></a></li>
+			<li><a href="http://static1.robohash.com/{{c2}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c2}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c3}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c3}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c4}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c4}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c5}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img
+            src="http://static1.robohash.com/{{c5}}" width="150" height="150" /></a></li>
 	</ul>
 
 </div><!-- end of content section -->
@@ -314,7 +303,7 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 <!-- start of content section -->
 <div class="content_section">
  
-  <p>By appending ?set=set3 to our URL, we get back to robots. New, suave, Giant-Head robots </p>
+  <p>By appending ?set=set3 to our URL, we get back to robots. New, suave, disembodied heads. That's sexy. Like a robot. </p>
   
   <ul class="gallery">
 			{% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
@@ -323,17 +312,11 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
 			{% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
 			
-			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="This character is
-            awesome, and so are you." class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
-			<li><a href="http://static1.robohash.com/{{c2}}" rel="prettyPhoto[gallery1]" title="I think he thinks you're
-            cute." class="fade"><img src="http://static1.robohash.com/{{c2}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c3}}" rel="prettyPhoto[gallery1]" title="Any robot you don't
-            click on, we dismantle." class="fade"><img src="http://static1.robohash.com/{{c3}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c4}}" rel="prettyPhoto[gallery1]" title="Robot tears taste like
-            candy." class="fade"><img src="http://static1.robohash.com/{{c4}}" width="150" height="150" alt="Some great title" /></a></li>
-            <li><a href="http://static1.robohash.com/{{c5}}" rel="prettyPhoto[gallery1]"
-            title="01010010010011110100001001001111010101000101001100100001!" class="fade"><img
-            src="http://static1.robohash.com/{{c5}}" width="150" height="150" alt="Some great title" /></a></li>
+			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" /></a></li>
+			<li><a href="http://static1.robohash.com/{{c2}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c2}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c3}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c3}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c4}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c4}}" width="150" height="150" /></a></li>
+            <li><a href="http://static1.robohash.com/{{c5}}" rel="prettyPhoto[gallery1]" title="{{random.choice(quotes)}}" class="fade"><img src="http://static1.robohash.com/{{c5}}" width="150" height="150" /></a></li>
 	</ul>
 
 </div><!-- end of content section -->
