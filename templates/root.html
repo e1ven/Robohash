@@ -171,12 +171,12 @@ $(document).ready(function(){
 
  <div class="section_title">How cool is this?</div>
  
- <p>That guy to your left there? He was specially generated from your IP address<i>Just for you</i>.<br>
+ <p>That guy to your left there? He was specially generated from your IP address <i>Just for you</i>.<br>
 	Try on your phone, and I bet you get someone different! </p>
 
-<!-- 
- <p><a href="#" title="Buy today while we have 20% off!" class="fade"><img src="static1.robohash.com/static/img/buy_button.png" width="328" height="54" alt="buy now" /></a></p>
-  -->
+  <p>Keep scrolling down to see some more freshly-assembled RoboHashes.</p>
+  <img src="static/img/down-arrow.png" alt="You!" class="left" />
+
 </div><!-- end of right content section -->
 
 </div><!-- end of content section -->
@@ -248,11 +248,11 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. </p>
   
   <ul class="gallery">
-			{% set c1 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + ".png" %}
-			{% set c2 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "1.png" %}
-			{% set c3 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "2.png" %}
-			{% set c4 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "3.png" %}
-			{% set c5 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "4.png" %}
+			{% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
+			{% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
+			{% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
+			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
+			{% set c5 =  ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png" %}
 			
 			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="This character is
             awesome, and so are you." class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
@@ -282,11 +282,11 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
   <p>By appending ?set=set2 to our URL, we are able to generate a whole slew of Random monsters. Here are 5 we picked out for you.  </p>
   
   <ul class="gallery">
-			{% set c1 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + ".png?set=set2" %}
-			{% set c2 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "1.png?set=set2" %}
-			{% set c3 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "2.png?set=set2" %}
-			{% set c4 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "3.png?set=set2" %}
-			{% set c5 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "4.png?set=set2" %}
+			{% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
+			{% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
+			{% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
+			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
+			{% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
 			
 			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="This character is
             awesome, and so are you." class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
@@ -316,11 +316,11 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
   <p>By appending ?set=set3 to our URL, we get back to robots. New, suave, Giant-Head robots </p>
   
   <ul class="gallery">
-			{% set c1 = '/' +  ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + ".png?set=set3" %}
-			{% set c2 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "1.png?set=set3" %}
-			{% set c3 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "2.png?set=set3" %}
-			{% set c4 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "3.png?set=set3" %}
-			{% set c5 = '/' + ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(5)) + "4.png?set=set3" %}
+			{% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
+			{% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
+			{% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
+			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
+			{% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
 			
 			<li><a href="http://static1.robohash.com/{{c1}}" rel="prettyPhoto[gallery1]" title="This character is
             awesome, and so are you." class="fade"><img src="http://static1.robohash.com/{{c1}}" width="150" height="150" alt="Some great title" /></a></li>
@@ -426,7 +426,7 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 	  <div class="benefit_right">
   
   			<span class="benefit_header">Multiple designs</span>
-  			<p>Want robots from a specific set? Use Robohash.org/whatever.png?set=set1. <br>Try out Collection1, Collection2, Collection3, see which best decorate your site.</p>
+  			<p>Want robots from a specific set? Use Robohash.org/whatever.png?set=set1. <br>Try out set1, set2, set3, see which best decorate your site.</p>
   		
         </div><!-- end of benefit right -->
   
@@ -443,7 +443,7 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 	  <div class="benefit_right">
   
   			<span class="benefit_header">Vacationing Robots</span>
-  			<p>Our robots like to travel. If you append ?background=true to your URL, our robots will appear with a random background picture from their travels. </p>
+  			<p>Our robots like to travel. If you append ?bgset=bg1 to your URL, our robots will appear with a random background picture from their travels. </p> <p>For Plainer-backgrounds, try bgset=bg2
   		
         </div><!-- end of benefit right -->
   
