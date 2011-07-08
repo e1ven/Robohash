@@ -297,7 +297,7 @@ class ImgHandler(tornado.web.RequestHandler):
         
         if client_bgset is not "":
             bglist = []
-            for ls in os.listdir(client_bgset):
+            for ls in os.listdir(client_bgset).sort():
                 if not ls.startswith("."):
                     bglist.append(client_bgset + "/" + ls)
             bg = Image.open(bglist[r.hasharray[3] % len(bglist)])
