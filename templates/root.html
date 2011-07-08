@@ -206,17 +206,17 @@ document.onkeypress = stopRKey;
 
 </script>
 
-<form name="textform" action="">
+<form id="textform" action="">
 <p>Enter any text, and press 'generate': </p><input type='text' name='query' onKeyPress=”return disableEnterKey(event)” />
-<a href="#" onclick="return submitform();"> generate</a>
+<a href="#" onclick="submitform();"> generate</a>
 </form>
 <script type="text/javascript">
 function submitform()
 {
    var x = document.getElementById("idimg");
-   x.setAttribute("src", "http://static1.robohash.com/" + textform.query.value );
+   x.setAttribute("src", "http://static1.robohash.com/" +  document.getElementById("textform").query.value );
    var y = document.getElementById("YourIP");   
-   y.innerHTML = "http://static1.robohash.com/" + textform.query.value;
+   y.innerHTML = "http://static1.robohash.com/" + document.getElementById("textform").query.value;
    
 }
 </script>
