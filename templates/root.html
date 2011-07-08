@@ -177,7 +177,7 @@ $(document).ready(function(){
 <!-- start of left content section -->
 <div class="left_content" style="position:relative; top:40px">
 
-  <img src="http://robohash.org/{{ip}}.png" alt="You!" class="left" id="idimg" />
+  <img src="http://robohash.org/{{ip}}.png" alt="You!" class="left" id="idimg" /><br>
   <p id='YourIP'>http://robohash.org/{{ip}}.png</p>
 </div><!-- end of left content section -->
 
@@ -191,11 +191,7 @@ $(document).ready(function(){
 		<p>Try on your phone, and I bet you get someone different!</p>
   		<p>Keep scrolling down to see some more freshly-assembled RoboHashes.</p>
 
-<!--
-		<g:plusone size="small" href="RoboHash.org"></g:plusone>
 
-<iframe src="http://www.facebook.com/plugins/like.php?app_id=129748100442677&amp;href=Robohash.org&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=dark&amp;font=trebuchet+ms&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
--->
 
 
 <script type="text/javascript"> 
@@ -220,7 +216,7 @@ function submitform()
    var x = document.getElementById("idimg");
    x.setAttribute("src", "http://static1.robohash.com/" + textform.query.value );
    var y = document.getElementById("YourIP");   
-   y.innerHTML = "http://RoboHash.org/" + textform.query.value;
+   y.innerHTML = "http://static1.robohash.com/" + textform.query.value;
    
 }
 </script>
@@ -556,8 +552,10 @@ All artwork used under license.
 
 <!-- start of footer right -->
 <div id="footer_right">
+	<iframe src="http://www.facebook.com/plugins/like.php?app_id=129748100442677&amp;href=Robohash.org&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=dark&amp;font=trebuchet+ms&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
 
-<span class="footer_heading">Twitter</span>&nbsp;&nbsp;<span class="follow"><a href="http://www.twitter.com/robohash" class="fade" title="Clicking on this will replace your cat with a robot.">Follow Us</a></span>
+<span class="follow"><a href="http://www.twitter.com/robohash" class="fade" title="Clicking on this will replace your cat with a robot.">Follow Us</a></span>
+<g:plusone size="small" href="RoboHash.org"></g:plusone>
 
 <div class="tweet"></div>
 
