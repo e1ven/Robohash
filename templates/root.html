@@ -201,19 +201,17 @@ $(document).ready(function(){
 <!-- start of left quote -->
 <div class="left_quote">
 
+{% set drquotes = ['<span class="large_quote">"Eliminates sources of Human Error."</span><br /><span class="small_quote">Dr. Chandra, RobotCrunch</span>','	<span class="large_quote">"Klaatu barada nikto!"</span><br /><span class="small_quote">Gort\'s Web Emporium</span>','<span class="large_quote">"A huge success!."</span><br /><span class="small_quote">Cave Johnson, CEO, Aperture Laboratories</span>','<span class="large_quote">"Finally, a place to get speedy and heroic robots; I can retire in peace."</span><br /><span class="small_quote">Thomas Light</span>','<span class="large_quote">"The Ultimate Worker."</span><br /><span class="small_quote">Joh Fredersen, Founder Metropolis</span>','<span class="large_quote">"They almost look alive."</span><br /><span class="small_quote">N. Crosby, Nova Robotics </span>','<span class="large_quote">"It looks highly Profitable, I\'m Sure."</span><br /><span class="small_quote">Dr. R. Venture, Super Scientist</span>','<span class="large_quote">"To make any alteration would prove fatal."</span><br /><span class="small_quote">Dr. Eldon Tyrell</span>', '<span class="large_quote">"The robots are all so.. Normal!"</span><br /><span class="small_quote">Joanna Eberhart, Beta tester</span>','<span class="large_quote">"They have great dreams, and potential. May they never reach them.."</span><br /><span class="small_quote">Dr. N. Soong</span>'] %}
+
+
+
 <img src="http://static1.robohash.com/static/img/star.png" width="33" height="31" alt="1 star" /><img
 src="http://static1.robohash.com/static/img/star.png" width="33" height="31" alt="1 star" /><img
 src="http://static1.robohash.com/static/img/star.png" width="33" height="31" alt="1 star" /><img
 src="http://static1.robohash.com/static/img/star.png" width="33" height="31" alt="1 star" /><img
 src="http://static1.robohash.com/static/img/star.png" width="33" height="31" alt="1 star" /> 
-
 <br />
-
-<span class="large_quote">"Eliminates sources of Human Error."</span>
-
-<br />
-
-<span class="small_quote">Dr. Chandra, RobotCrunch</span>
+{{    drquotes[random.randrange(0,   len(drquotes)/2) ] }}
 
 </div><!-- end of left quote -->
 
@@ -227,12 +225,7 @@ src="http://static1.robohash.com/static/img/indented_star.png" width="27" height
 src="http://static1.robohash.com/static/img/indented_star.png" width="27" height="25" alt="1 star" />
 
 <br />
-
-<span class="large_quote">"Klaatu barada nikto!"</span>
-
-<br />
-
-<span class="small_quote">Gort's Web Emporium</span>
+{{drquotes[  random.randrange(  len(drquotes)/2,len(drquotes)  )] }}
 
 </div><!-- end of right quote -->
 
