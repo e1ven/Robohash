@@ -305,7 +305,7 @@ class ImgHandler(tornado.web.RequestHandler):
             bg.paste(robohash,(0,0),robohash)
             robohash = bg               
                            
-        robohash = robohash.resize((sizex,sizey))    
+        robohash = robohash.resize((sizex,sizey),Image.ANTIALIAS)    
         robohash.save(self,format=ext)
 
 
