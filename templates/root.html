@@ -175,10 +175,10 @@ $(document).ready(function(){
 <div class="content_section">
 
 <!-- start of left content section -->
-<div class="left_content" style="position:relative; top:90px">
+<div class="left_content" style="position:relative; top:40px">
 
-  <img src="http://robohash.com/{{ip}}.png" alt="You!" class="left" />
-  
+  <img src="http://robohash.org/{{ip}}.png" alt="You!" class="left" id="idimg" />
+  <p id='YourIP'>http://robohash.org/{{ip}}.png</p>
 </div><!-- end of left content section -->
 
 <!-- start of right content section -->
@@ -191,10 +191,40 @@ $(document).ready(function(){
 		<p>Try on your phone, and I bet you get someone different!</p>
   		<p>Keep scrolling down to see some more freshly-assembled RoboHashes.</p>
 
-		<!-- Place this tag where you want the +1 button to render -->
+<!--
 		<g:plusone size="small" href="RoboHash.org"></g:plusone>
 
 <iframe src="http://www.facebook.com/plugins/like.php?app_id=129748100442677&amp;href=Robohash.org&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=dark&amp;font=trebuchet+ms&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
+-->
+
+
+<script type="text/javascript"> 
+
+function stopRKey(evt) { 
+  var evt = (evt) ? evt : ((event) ? event : null); 
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+  if ((evt.keyCode == 13) && (node.type=="text"))  {submitform(); return false;} 
+} 
+
+document.onkeypress = stopRKey; 
+
+</script>
+
+<form name="textform" action="">
+<p>Enter any text, and press 'generate': </p><input type='text' name='query' onKeyPress=”return disableEnterKey(event)” />
+<a href="#" onclick="return submitform();"> generate</a>
+</form>
+<script type="text/javascript">
+function submitform()
+{
+   var x = document.getElementById("idimg");
+   x.setAttribute("src", "http://static1.robohash.com/" + textform.query.value );
+   var y = document.getElementById("YourIP");   
+   y.innerHTML = "http://RoboHash.org/" + textform.query.value;
+   
+}
+</script>
+
 
 
 	</div>
