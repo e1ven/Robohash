@@ -82,7 +82,132 @@ class Robohash(object):
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         ip = self.request.remote_ip
-        self.write(self.render_string('templates/root.html',ip=ip))
+        
+        robo = [
+"""
+             ,     ,
+             (\\____/)
+              (_oo_)
+                (O)
+              __||__    \\)
+           []/______\\[] /
+           / \\______/ \\/
+          /    /__\\
+         (\\   /____\\ """,
+"""
+                 _______
+               _/       \\_
+              / |       | \\
+             /  |__   __|  \\
+            |__/((o| |o))\\__|
+            |      | |      |
+            |\\     |_|     /|
+            | \\           / |
+             \\| /  ___  \\ |/
+              \\ | / _ \\ | /
+               \\_________/
+                _|_____|_
+           ____|_________|____
+          /                   \\  -- Mark Moir
+
+ 
+""",
+"""                     .andAHHAbnn.
+                     .aAHHHAAUUAAHHHAn.
+                    dHP^~"        "~^THb.
+              .   .AHF                YHA.   .
+              |  .AHHb.              .dHHA.  |
+              |  HHAUAAHAbn      adAHAAUAHA  |
+              I  HF~"_____        ____ ]HHH  I
+             HHI HAPK""~^YUHb  dAHHHHHHHHHH IHH
+             HHI HHHD> .andHH  HHUUP^~YHHHH IHH
+             YUI ]HHP     "~Y  P~"     THH[ IUP
+              "  `HK                   ]HH'  "
+                  THAn.  .d.aAAn.b.  .dHHP
+                  ]HHHHAAUP" ~~ "YUAAHHHH[
+                  `HHP^~"  .annn.  "~^YHH'
+                   YHb    ~" "" "~    dHF
+                    "YAb..abdHHbndbndAP"
+                     THHAAb.  .adAHHF
+                      "UHHHHHHHHHHU"
+                        ]HHUUHHHHHH[
+                      .adHHb "HHHHHbn.
+               ..andAAHHHHHHb.AHHHHHHHAAbnn..
+          .ndAAHHHHHHUUHHHHHHHHHHUP^~"~^YUHHHAAbn.
+            "~^YUHHP"   "~^YUHHUP"        "^YUP^"
+                 ""         "~~"
+""",
+"""                                 /~@@~\\,
+                  _______ . _\\_\\___/\\ __ /\\___|_|_ . _______
+                 / ____  |=|      \\  <_+>  /      |=|  ____ \\
+                 ~|    |\\|=|======\\\\______//======|=|/|    |~
+                  |_   |    \\      |      |      /    |    |
+                   \\==-|     \\     |  2D  |     /     |----|~~)
+                   |   |      |    |      |    |      |____/~/
+                   |   |       \\____\\____/____/      /    / /
+                   |   |         {----------}       /____/ /
+                   |___|        /~~~~~~~~~~~~\\     |_/~|_|/
+                    \\_/        [/~~~~~||~~~~~\\]     /__|\\
+                    | |         |    ||||    |     (/|[[\\)
+                    [_]        |     |  |     |
+                               |_____|  |_____|
+                               (_____)  (_____)
+                               |     |  |     |
+                               |     |  |     |
+                               |/~~~\\|  |/~~~\\|
+                               /|___|\\  /|___|\\
+                              <_______><_______>""",
+"""                                      _____
+                                        /_____\\
+                                   ____[\\`---'/]____
+                                  /\\ #\\ \\_____/ /# /\\
+                                 /  \\# \\_.---._/ #/  \\
+                                /   /|\\  |   |  /|\\   \\
+                               /___/ | | |   | | | \\___\\
+                               |  |  | | |---| | |  |  |
+                               |__|  \\_| |_#_| |_/  |__|
+                               //\\\\  <\\ _//^\\\\_ />  //\\\\
+                               \\||/  |\\//// \\\\\\\\/|  \\||/
+                                     |   |   |   |
+                                     |---|   |---|
+                                     |---|   |---|
+                                     |   |   |   |
+                                     |___|   |___|
+                                     /   \\   /   \\
+                                    |_____| |_____|
+                                    |HHHHH| |HHHHH|
+                              """, 
+"""                                        ()               ()
+                                            \\             /
+                                           __\\___________/__
+                                          /                 \\
+                                         /     ___    ___    \\
+                                         |    /   \  /   \   |
+                                         |    |  H || H  |   |
+                                         |    \___/  \___/   |
+                                         |                   |
+                                         |  \             /  |
+                                         |   \___________/   |
+                                         \                   /
+                                          \_________________/
+                                         _________|__|_______
+                                       _|                    |_
+                                      / |                    | \\
+                                     /  |            O O O   |  \\
+                                     |  |                    |  |
+                                     |  |            O O O   |  |
+                                     |  |                    |  |
+                                     /  |                    |  \\
+                                    |  /|                    |\  |
+                                     \| |                    | |/
+                                        |____________________|
+                                           |  |        |  |
+                                           |__|        |__|
+                                          / __ \      / __ \\
+                                          OO  OO      OO  OO
+                              """]
+                              
+        self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo)))
 
 class ImgHandler(tornado.web.RequestHandler):
     def get(self,string=None):
