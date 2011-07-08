@@ -148,11 +148,12 @@ class ImgHandler(tornado.web.RequestHandler):
         
         
         #Change to a usuable format
-        if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm')):
+        if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm','tif')):
             ext = string[string.rfind('.') +1 :len(string)] 
             if ext.lower() == 'jpg':
-                print "-------"
                 ext = 'jpeg'            
+            if ext.lower() == 'tif':
+                ext = 'tiff'
         else:
             ext = "png"
         self.set_header("Content-Type", "image/" + ext)
