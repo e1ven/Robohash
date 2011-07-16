@@ -220,8 +220,19 @@ class ImgHandler(tornado.web.RequestHandler):
         if string is None:
             string = self.request.remote_ip
         string = urllib.quote_plus(string)
+        
+        if "ignoreext" in self.request.arguments:
+            client_ignoreext = tornado.escape.xhtml_escape(self.get_argument("ignoreext"))
+        else:
+            client_ignoreext = None
+            
+        if client_ignoreext == "true":
+            if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm','tif')):
+                string = string[0:string.rfind('.')]
+                print string
         r = Robohash(string)
-          
+
+            
         #Create 10 hashes. This should be long enough for the current crop of variables.
         #This is probably not insecure, sicne we'd be modding anyway. This just spreads it out more.
         r.createHashes(11)
@@ -235,6 +246,9 @@ class ImgHandler(tornado.web.RequestHandler):
         sizex = 300
         sizey = 300
         
+
+            
+            
         if "size" in self.request.arguments:
             sizelist = self.get_argument("size").split(tornado.escape.xhtml_escape("x"),3)
             if ((int(sizelist[0]) > 0) and (int(sizelist[0]) < 4096)):
