@@ -264,7 +264,18 @@ class ImgHandler(tornado.web.RequestHandler):
         else:
             #If no set specified, you get set 1
             client_set = "set1"
-            
+        
+        ##Let people define multiple sets, so I can add more.
+        if "sets" in self.request.arguments:
+            newsets = tornado.escape.xhtml_escape(self.get_argument("sets")).split(",");
+            replaceset = []
+            for s in newsets:
+                if s in sets:
+                    replaceset.append(s)
+            client_set = replaceset[r.hasharray[1] % len(replaceset) ]
+
+
+
         
         if client_set == 'set1':
             client_set = colors[r.hasharray[0] % len(colors) ]    
