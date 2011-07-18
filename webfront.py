@@ -274,9 +274,6 @@ class ImgHandler(tornado.web.RequestHandler):
                     replaceset.append(s)
             client_set = replaceset[r.hasharray[1] % len(replaceset) ]
 
-
-
-        
         if client_set == 'set1':
             client_set = colors[r.hasharray[0] % len(colors) ]    
             
@@ -289,7 +286,7 @@ class ImgHandler(tornado.web.RequestHandler):
                 client_bgset = tornado.escape.xhtml_escape(self.get_argument("bgset"))
             else:
                 client_bgset = bgsets[r.hasharray[2] % len(bgsets) ]
-
+            
                                 
                                 
         #If they don't specify a color, use hashvalue        
@@ -322,7 +319,7 @@ class ImgHandler(tornado.web.RequestHandler):
         
         if client_bgset is not "":
             bglist = []
-            for ls in os.listdir(client_bgset).sort():
+            for ls in os.listdir(client_bgset):
                 if not ls.startswith("."):
                     bglist.append(client_bgset + "/" + ls)
             bg = Image.open(bglist[r.hasharray[3] % len(bglist)])
