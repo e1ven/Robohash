@@ -1,0 +1,8 @@
+RoboHash, the source code for the site RoboHash.org
+OK, I'll admit I'm a crappy programmer.
+Compounding this, I wrote this code initially to be internal-only. It's ugly, and could be a LOT nicer.
+Sorry about that.
+
+What it basically does is copy/paste the various robot pictures, using bits from the SHA hash.
+It's not perfect, and not entirely secure, but it gives a good gut-check to "Hey, this sha is wrong"
+
