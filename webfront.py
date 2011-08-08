@@ -2,7 +2,6 @@
 #
 # Copyright 2011 Pluric
     
-
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
@@ -57,7 +56,9 @@ class Robohash(object):
        
        completelist = []
        locallist = []
-       for ls in os.listdir(path):
+       listdir = os.listdir(path)
+       listdir.sort()
+       for ls in listdir:
            if not ls.startswith("."):
                if os.path.isdir(path + "/" + ls):
                    subfiles  = self.getHashList(path + "/" + ls)
@@ -305,7 +306,26 @@ class ImgHandler(tornado.web.RequestHandler):
             ext = "png"
         self.set_header("Content-Type", "image/" + ext)
         hashlist = r.getHashList(client_set)
-        hashlist.sort()
+
+        #OK, here's where we do some creative sorting.
+        #Basically, we have two integers before every file
+        #The first one ensure FS order, which is necessary to match the RH.org server
+        #The second one ensures build order.
+        #The FS order is only necessary during picking elements. Now, we want the second sort
+        #So create a new list, ordered by the second integer
+        hlcopy = []
+        for element in hashlist:
+            element = element[0:element.find("/",element.find("#") -4) +1] + element[element.find("#") +1:len(element)]
+            hlcopy.append(element)
+        #Now, combine them into tuples, and sort. A tuples list always sorts by the FIRST element.
+        duality = zip(hlcopy,hashlist)
+        duality.sort()
+        pprint.pprint(duality)
+        hlcopy,hashlist = zip(*duality)
+        pprint.pprint(hlcopy)
+        print "------"
+        pprint.pprint(hashlist)
+
         robohash = Image.open(hashlist[0])
         robohash = robohash.resize((1024,1024))
         for png in hashlist:
