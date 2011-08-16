@@ -6,3 +6,5 @@ Sorry about that.
 What it basically does is copy/paste the various robot pictures, using bits from the SHA hash.
 It's not perfect, and not entirely secure, but it gives a good gut-check to "Hey, this sha is wrong"
 
+CC BY 3.0 on the Images, BSD on the code.
+-CPD
