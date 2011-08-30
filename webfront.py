@@ -229,7 +229,7 @@ class ImgHandler(tornado.web.RequestHandler):
             
             
         #Change to a usuable format
-        if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm','tif')):
+        if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm','.tif')):
             ext = string[string.rfind('.') +1 :len(string)] 
             if ext.lower() == 'jpg':
                 ext = 'jpeg'            
