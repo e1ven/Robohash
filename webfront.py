@@ -227,10 +227,21 @@ class ImgHandler(tornado.web.RequestHandler):
         else:
             client_ignoreext = None
             
-        if client_ignoreext == "true":
+            
+        #Change to a usuable format
+        if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm','tif')):
+            ext = string[string.rfind('.') +1 :len(string)] 
+            if ext.lower() == 'jpg':
+                ext = 'jpeg'            
+            if ext.lower() == 'tif':
+                ext = 'tiff'
+        else:
+            ext = "png"
+            
+            
+        if client_ignoreext != "false":
             if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm','tif')):
                 string = string[0:string.rfind('.')]
-                print string
         r = Robohash(string)
 
             
@@ -295,15 +306,7 @@ class ImgHandler(tornado.web.RequestHandler):
             client_set = colors[r.hasharray[0] % len(colors) ]
         
         
-        #Change to a usuable format
-        if string.endswith(('.png','.gif','.jpg','.bmp','.im','.jpeg','.pcx','.ppm','.tiff','.xbm','tif')):
-            ext = string[string.rfind('.') +1 :len(string)] 
-            if ext.lower() == 'jpg':
-                ext = 'jpeg'            
-            if ext.lower() == 'tif':
-                ext = 'tiff'
-        else:
-            ext = "png"
+
         self.set_header("Content-Type", "image/" + ext)
         hashlist = r.getHashList(client_set)
 
