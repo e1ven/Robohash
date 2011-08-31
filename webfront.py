@@ -274,14 +274,17 @@ class ImgHandler(tornado.web.RequestHandler):
                 # construct the url
                 gravatar_url = "http://www.gravatar.com/avatar.php?"
                 gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(string.lower()).hexdigest(), 'default':default, 'size':str(sizey)})
-
-
-                try:
-                    f = urllib2.urlopen(urllib2.Request(gravatar_url))
-                    self.redirect(gravatar_url, permanent=False)  
-                    return 0
-                except:
-                  badGravatar = True
+            if tornado.escape.xhtml_escape(self.get_argument("gravatar")) == 'hashed':
+                default = "404"
+                # construct the url
+                gravatar_url = "http://www.gravatar.com/avatar.php?"
+                gravatar_url += urllib.urlencode({'gravatar_id':string, 'default':default, 'size':str(sizey)})
+            try:
+                f = urllib2.urlopen(urllib2.Request(gravatar_url))
+                self.redirect(gravatar_url, permanent=False)  
+                return 0
+            except:
+              badGravatar = True
   
         if "set" in self.request.arguments:
             if tornado.escape.xhtml_escape(self.get_argument("set")) == 'any':
