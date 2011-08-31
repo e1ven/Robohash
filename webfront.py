@@ -10,11 +10,13 @@ import tornado.escape
 import socket
 import re
 import os
+import md5
 import pprint
 import Image
 import hashlib
 import urllib
 import random 
+import urllib2
 from tornado.options import define, options
 try: 
    from hashlib import md5 as md5_func
@@ -220,7 +222,7 @@ class ImgHandler(tornado.web.RequestHandler):
         #Create a hash for the string as given
         if string is None:
             string = self.request.remote_ip
-        string = urllib.quote_plus(string)
+        # string = urllib.quote_plus(string)
         
         if "ignoreext" in self.request.arguments:
             client_ignoreext = tornado.escape.xhtml_escape(self.get_argument("ignoreext"))
@@ -256,8 +258,6 @@ class ImgHandler(tornado.web.RequestHandler):
         sizex = 300
         sizey = 300
         
-
-            
             
         if "size" in self.request.arguments:
             sizelist = self.get_argument("size").split(tornado.escape.xhtml_escape("x"),3)
@@ -266,6 +266,23 @@ class ImgHandler(tornado.web.RequestHandler):
             if ((int(sizelist[0]) > 0) and (int(sizelist[0]) < 4096)):
                 sizey = int(sizelist[1])        
             
+            
+            
+        if "gravatar" in self.request.arguments:    
+            if tornado.escape.xhtml_escape(self.get_argument("gravatar")) == 'yes':
+                default = "404"
+                # construct the url
+                gravatar_url = "http://www.gravatar.com/avatar.php?"
+                gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(string.lower()).hexdigest(), 'default':default, 'size':str(sizey)})
+
+
+                try:
+                    f = urllib2.urlopen(urllib2.Request(gravatar_url))
+                    self.redirect(gravatar_url, permanent=False)  
+                    return 0
+                except:
+                  badGravatar = True
+  
         if "set" in self.request.arguments:
             if tornado.escape.xhtml_escape(self.get_argument("set")) == 'any':
                 client_set = sets[r.hasharray[1] % len(sets) ]
