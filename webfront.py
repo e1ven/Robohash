@@ -278,7 +278,7 @@ class ImgHandler(tornado.web.RequestHandler):
                 string = urllib.quote(string)
                 default = "404"
                 # construct the url
-                gravatar_url = "http://www.gravatar.com/avatar/" + string + "?"
+                gravatar_url = self.request.protocol + "://www.gravatar.com/avatar/" + string + "?"
                 gravatar_url += urllib.urlencode({'default':default, 'size':str(sizey)})
             try:
                 f = urllib2.urlopen(urllib2.Request(gravatar_url))
