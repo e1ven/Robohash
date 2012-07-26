@@ -380,7 +380,7 @@ class ImgHandler(tornado.web.RequestHandler):
           robohash.save(fakefile,format='jpeg')
           fakefile.seek(0)
           data_uri = fakefile.read().encode("base64").replace("\n", "")
-          self.write('<img alt="sample" src="data:image/png;base64,{0}">'.format(data_uri))
+          self.write("data:image/jpeg;base64," + data_uri)
 
 
 
