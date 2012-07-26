@@ -22,6 +22,7 @@ try:
    from hashlib import md5 as md5_func
 except ImportError:
    from md5 import new as md5_func
+import cStringIO
 
 define("port", default=80, help="run on the given port", type=int)
 
@@ -231,7 +232,7 @@ class ImgHandler(tornado.web.RequestHandler):
             
             
         #Change to a usuable format
-        if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm')):
+        if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
             ext = string[string.rfind('.') +1 :len(string)] 
             if ext.lower() == 'jpg':
                 ext = 'jpeg'            
@@ -372,7 +373,15 @@ class ImgHandler(tornado.web.RequestHandler):
             robohash = bg               
                            
         robohash = robohash.resize((sizex,sizey),Image.ANTIALIAS)    
-        robohash.save(self,format=ext)
+        if ext != 'datauri':
+          robohash.save(self,format=ext)
+        else:
+          fakefile = cStringIO.StringIO()
+          robohash.save(fakefile,format='jpeg')
+          fakefile.seek(0)
+          data_uri = fakefile.read().encode("base64").replace("\n", "")
+          self.write('<img alt="sample" src="data:image/png;base64,{0}">'.format(data_uri))
+
 
 
 
