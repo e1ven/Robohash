@@ -241,7 +241,7 @@ class ImgHandler(tornado.web.RequestHandler):
             
             
         if client_ignoreext != "false":
-            if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm')):
+            if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
                 string = string[0:string.rfind('.')]
         r = Robohash(string)
 
