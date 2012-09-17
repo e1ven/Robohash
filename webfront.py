@@ -401,6 +401,8 @@ def main():
     }
 
     application = tornado.web.Application([
+        (r'/(crossdomain\.xml)', tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
+        "static/")}),
         (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
         "static/")}),
         (r"/", MainHandler),
