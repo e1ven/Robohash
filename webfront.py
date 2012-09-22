@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # Copyright 2011 Pluric
-    
+
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
@@ -15,10 +15,10 @@ import pprint
 import Image
 import hashlib
 import urllib
-import random 
+import random
 import urllib2
 from tornado.options import define, options
-try: 
+try:
    from hashlib import md5 as md5_func
 except ImportError:
    from md5 import new as md5_func
@@ -38,7 +38,7 @@ class Robohash(object):
        #2 = bgset
        #3 = BG
        self.iter = 4
-                     
+
    def createHashes(self,count):
        #Create and store a series of hash-values
        #Basically, split up a hash (SHA/md5/etc) into X parts
@@ -47,7 +47,7 @@ class Robohash(object):
            blocksize = (len(self.hexdigest) / count)
            currentstart = (1 + i) * blocksize - blocksize
            currentend = (1 +i) * blocksize
-           self.hasharray.append(int(self.hexdigest[currentstart:currentend],16))            
+           self.hasharray.append(int(self.hexdigest[currentstart:currentend],16))
 
    def dirCount(self,path):
        #return the count of just the directories beneath me.
@@ -56,7 +56,7 @@ class Robohash(object):
    def getHashList(self,path):
        #Each iteration, if we hit a directory, recurse
        #If not, choose the appropriate file, given the hashes, stored above
-       
+
        completelist = []
        locallist = []
        listdir = os.listdir(path)
@@ -74,11 +74,11 @@ class Robohash(object):
            elementchoice = self.hasharray[self.iter] % len(locallist)
            luckyelement = locallist[elementchoice]
            locallist = []
-           locallist.append(luckyelement)    
+           locallist.append(luckyelement)
            self.iter += 1
-           
 
-       completelist = completelist + locallist   
+
+       completelist = completelist + locallist
        return completelist
 
 
@@ -86,7 +86,7 @@ class Robohash(object):
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         ip = self.request.remote_ip
-        
+
         robo = [
 """
              ,     ,
@@ -114,7 +114,7 @@ class MainHandler(tornado.web.RequestHandler):
            ____|_________|____
           /                   \\  -- Mark Moir
 
- 
+
 """,
 """                     .andAHHAbnn.
                      .aAHHHAAUUAAHHHAn.
@@ -180,7 +180,7 @@ class MainHandler(tornado.web.RequestHandler):
                                      /   \\   /   \\
                                     |_____| |_____|
                                     |HHHHH| |HHHHH|
-                              """, 
+                              """,
 """                                        ()               ()
                                             \\             /
                                            __\\___________/__
@@ -210,93 +210,92 @@ class MainHandler(tornado.web.RequestHandler):
                                           / __ \\      / __ \\
                                           OO  OO      OO  OO
                               """]
-                              
+
         self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo)))
 
 class ImgHandler(tornado.web.RequestHandler):
     def get(self,string=None):
-        
+        protocol = self.request.protocol
+
         colors = ['blue','brown','green','grey','orange','pink','purple','red','white','yellow']
         sets = ['set1','set2','set3']
         bgsets = ['bg1','bg2']
-        
+
         #Create a hash for the string as given
         if string is None:
             string = self.request.remote_ip
         # string = urllib.quote_plus(string)
-        
+
         if "ignoreext" in self.request.arguments:
             client_ignoreext = tornado.escape.xhtml_escape(self.get_argument("ignoreext"))
         else:
             client_ignoreext = None
-            
-            
+
+
         #Change to a usuable format
         if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
-            ext = string[string.rfind('.') +1 :len(string)] 
+            ext = string[string.rfind('.') +1 :len(string)]
             if ext.lower() == 'jpg':
-                ext = 'jpeg'            
+                ext = 'jpeg'
         else:
             ext = "png"
-            
-            
+
+
         if client_ignoreext != "false":
             if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
                 string = string[0:string.rfind('.')]
         r = Robohash(string)
 
-            
+
         #Create 10 hashes. This should be long enough for the current crop of variables.
         #This is probably not insecure, sicne we'd be modding anyway. This just spreads it out more.
         r.createHashes(11)
-        
-        
-                
+
+
+
         #Now, customize the request if possible.
         client_color = ""
         client_set = ""
         client_bgset = ""
         sizex = 300
         sizey = 300
-        
-            
+
         if "size" in self.request.arguments:
             sizelist = self.get_argument("size").split(tornado.escape.xhtml_escape("x"),3)
             if ((int(sizelist[0]) > 0) and (int(sizelist[0]) < 4096)):
                 sizex = int(sizelist[0])
             if ((int(sizelist[0]) > 0) and (int(sizelist[0]) < 4096)):
-                sizey = int(sizelist[1])        
-            
-            
-            
-        if "gravatar" in self.request.arguments:    
+                sizey = int(sizelist[1])
+
+        if "gravatar" in self.request.arguments:
+            gravatar_url = "%s://www.gravatar.com/avatar/%s?%s"
             if tornado.escape.xhtml_escape(self.get_argument("gravatar")) == 'yes':
                 default = "404"
                 # construct the url
-                gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(string.lower()).hexdigest() + "?"
-                gravatar_url += urllib.urlencode({'default':default, 'size':str(sizey)})
+                gravatar_hash = hashlib.md5(string.lower()).hexdigest()
+                gravatar_query = urllib.urlencode({'default':default, 'size':str(sizey)})
             if tornado.escape.xhtml_escape(self.get_argument("gravatar")) == 'hashed':
                 string = urllib.quote(string)
                 default = "404"
                 # construct the url
-                gravatar_url = "http://www.gravatar.com/avatar/" + string + "?"
-                gravatar_url += urllib.urlencode({'default':default, 'size':str(sizey)})
+                gravatar_hash = string
+                gravatar_query = urllib.urlencode({'default':default, 'size':str(sizey)})
             try:
-                f = urllib2.urlopen(urllib2.Request(gravatar_url))
-                self.redirect(gravatar_url, permanent=False)  
+                urllib2.urlopen(urllib2.Request((gravatar_url % (protocol, gravatar_hash, gravatar_query))))
+                self.redirect((gravatar_url % (protocol, gravatar_hash, gravatar_query)), permanent=False)
                 return 0
             except:
-              badGravatar = True
-  
+              pass
+
         if "set" in self.request.arguments:
             if tornado.escape.xhtml_escape(self.get_argument("set")) == 'any':
                 client_set = sets[r.hasharray[1] % len(sets) ]
             if self.get_argument("set") in sets:
-                client_set =  tornado.escape.xhtml_escape(self.get_argument("set"))  
+                client_set =  tornado.escape.xhtml_escape(self.get_argument("set"))
         else:
             #If no set specified, you get set 1
             client_set = "set1"
-        
+
         ##Let people define multiple sets, so I can add more.
         if "sets" in self.request.arguments:
             newsets = tornado.escape.xhtml_escape(self.get_argument("sets")).split(",");
@@ -307,25 +306,25 @@ class ImgHandler(tornado.web.RequestHandler):
             client_set = replaceset[r.hasharray[1] % len(replaceset) ]
 
         if client_set == 'set1':
-            client_set = colors[r.hasharray[0] % len(colors) ]    
-            
+            client_set = colors[r.hasharray[0] % len(colors) ]
+
         if "color" in self.request.arguments:
                 if self.get_argument("color") in colors:
                     client_set = tornado.escape.xhtml_escape(self.get_argument("color"))
-                    
+
         if "bgset" in self.request.arguments:
             if self.get_argument("bgset") in bgsets:
                 client_bgset = tornado.escape.xhtml_escape(self.get_argument("bgset"))
             else:
                 client_bgset = bgsets[r.hasharray[2] % len(bgsets) ]
-            
-                                
-                                
-        #If they don't specify a color, use hashvalue        
+
+
+
+        #If they don't specify a color, use hashvalue
         if ((client_color == "") and (client_set == "")):
             client_set = colors[r.hasharray[0] % len(colors) ]
-        
-        
+
+
 
         self.set_header("Content-Type", "image/" + ext)
         hashlist = r.getHashList(client_set)
@@ -352,14 +351,14 @@ class ImgHandler(tornado.web.RequestHandler):
         robohash = Image.open(hashlist[0])
         robohash = robohash.resize((1024,1024))
         for png in hashlist:
-            img = Image.open(png) 
+            img = Image.open(png)
             img = img.resize((1024,1024))
             robohash.paste(img,(0,0),img)
         if ext == 'bmp':
             #Flatten bmps
             r, g, b, a = robohash.split()
             robohash = Image.merge("RGB", (r, g, b))
-        
+
         if client_bgset is not "":
             bglist = []
             backgrounds = os.listdir(client_bgset)
@@ -370,9 +369,9 @@ class ImgHandler(tornado.web.RequestHandler):
             bg = Image.open(bglist[r.hasharray[3] % len(bglist)])
             bg = bg.resize((1024,1024))
             bg.paste(robohash,(0,0),robohash)
-            robohash = bg               
-                           
-        robohash = robohash.resize((sizex,sizey),Image.ANTIALIAS)    
+            robohash = bg
+
+        robohash = robohash.resize((sizex,sizey),Image.ANTIALIAS)
         if ext != 'datauri':
           robohash.save(self,format=ext)
         else:
