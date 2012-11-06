@@ -230,16 +230,16 @@ class ImgHandler(tornado.web.RequestHandler):
               args[k] = args[k][0]
             else:
               args[k] = ""
-        
+
+        # IF, and Only IF, there is an arg in the list, should we interpret slashes as params
         split = string.split('/')
-        if len(split) > 0:
-            string = split[0]
-        
         if len(split) > 1:
-          for str in split[1::]:
+          for str in split:
             b = str.encode('ascii','ignore').split('_')
             if len(b) == 2:
-              args[b[0]] = b[1]
+              if b[0] in ['gravatar','ignoreext','size','set','bgset']:
+                args[b[0]] = b[1]
+                string = split[len(split)-1]
 
         colors = ['blue','brown','green','grey','orange','pink','purple','red','white','yellow']
         sets = ['set1','set2','set3']
