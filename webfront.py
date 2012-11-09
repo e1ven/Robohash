@@ -234,8 +234,8 @@ class ImgHandler(tornado.web.RequestHandler):
         # IF, and Only IF, there is an arg in the list, should we interpret slashes as params
         split = string.split('/')
         if len(split) > 1:
-          for str in split:
-            b = str.encode('ascii','ignore').split('_')
+          for st in split:
+            b = st.encode('ascii','ignore').split('_')
             if len(b) == 2:
               if b[0] in ['gravatar','ignoreext','size','set','bgset']:
                 args[b[0]] = b[1]
