@@ -237,7 +237,7 @@ class ImgHandler(tornado.web.RequestHandler):
           for st in split:
             b = st.encode('ascii','ignore').split('_')
             if len(b) == 2:
-              if b[0] in ['gravatar','ignoreext','size','set','bgset']:
+              if b[0] in ['gravatar','ignoreext','size','set','bgset','color']:
                 args[b[0]] = b[1]
                 string = split[len(split)-1]
 
