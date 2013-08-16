@@ -215,9 +215,7 @@ function submitform()
 {
    var x = document.getElementById("idimg");
    x.setAttribute("src", "https://robohash.org/" +  document.getElementById("textform").query.value );
-   var y = document.getElementById("YourIP");   
-   y.innerHTML = "http://robohash.org/" + document.getElementById("textform").query.value;
-   
+   $("#YourIP").text( "http://robohash.org/" + document.getElementById("textform").query.value);
 }
 </script>
 
