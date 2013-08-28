@@ -1,0 +1,1 @@
+from .robohash import Robohash

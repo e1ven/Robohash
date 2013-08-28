@@ -223,6 +223,7 @@ class ImgHandler(tornado.web.RequestHandler):
         sizey = 300
         format = "png"
         bgset = None
+        color = None
 
         # Normally, we pass in arguments with standard HTTP GET variables, such as
         # ?set=any and &size=100x100
@@ -259,17 +260,11 @@ class ImgHandler(tornado.web.RequestHandler):
                 string = self.request.remote_ip
 
 
-        # If the user hasn't disabled it, detect if there is requested extension.
-        # If so, remove it from the string, but set the format.
-        # This ensures that /Bear.png and /Bear.bmp will send back the same image, in different formats.
-        if args.get('ignoreext','false').lower() != 'true':                    
-            if string.lower().endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
-                    format = string[string.rfind('.') +1 :len(string)] 
-                    if format.lower() == 'jpg':
-                            format = 'jpeg'      
-                    string = string[0:string.rfind('.')]          
+        # Detect if the user has passed in a flag to ignore extensions.
+        # Pass this along to to Robohash obj later on.
 
-                
+        ignoreext = args.get('ignoreext','false').lower() == 'true'
+
         # Split the size variable in to sizex and sizey
         if "size" in args:
                 sizex,sizey = args['size'].split("x")
@@ -306,6 +301,7 @@ class ImgHandler(tornado.web.RequestHandler):
         # Create our Robohashing object
         r = Robohash(string)
 
+
         # Allow users to manually specify a robot 'set' that they like.
         # Ensure that this is one of the allowed choices, or allow all
         # If they don't set one, take the first entry from sets above.
@@ -333,25 +329,23 @@ class ImgHandler(tornado.web.RequestHandler):
         # Right now, this feature is almost never used. ( It was < 44 requests this year, out of 78M reqs )
 
         if args.get('color') in r.colors:
-            roboset = 'set1/' + args.get('color')
+            roboset = 'set1'
+            color = args.get('color')
 
         # If they DID choose set1, randomly choose a color.
-        if roboset == 'set1':
-            randomcolor = r.colors[r.hasharray[0] % len(r.colors) ]
-            roboset = 'set1/' + randomcolor
+        if roboset == 'set1' and color is None:
+            color = r.colors[r.hasharray[0] % len(r.colors) ]
+            roboset = 'set1'
 
-        # Allow them to set a background, or default to None
-        if args.get('bgset') in r.bgsets:
+        # Allow them to set a background, or keep as None
+        if args.get('bgset') in r.bgsets + ['any']:
             bgset = args.get('bgset')
-        elif args.get('bgset','').lower() == 'any':
-            bgset = r.bgsets[ r.hasharray[2] % len(r.bgsets) ]                                                                                                
-
-
+                                                                                         
         # We're going to be returning the image directly, so tell the browser to expect a binary.
         self.set_header("Content-Type", "image/" + format)
 
         # Build our Robot.
-        r.assemble(roboset=roboset,format=format,bgset=bgset,sizex=sizex,sizey=sizey)
+        r.assemble(roboset=roboset,format=format,bgset=bgset,color=color,sizex=sizex,sizey=sizey)
 
         # Print the Robot to the handler, as a file-like obj
         if r.format != 'datauri':
