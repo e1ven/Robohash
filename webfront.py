@@ -1,439 +1,396 @@
 #!/usr/bin/env python
-#
-# Copyright 2011 Pluric
-    
+# This Python file uses the following encoding: utf-8
+
+# Find details about this project at https://github.com/e1ven/robohash
+
+from __future__ import unicode_literals
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
-import tornado.escape
 import socket
-import re
 import os
-import md5
-import pprint
-import Image
 import hashlib
-import urllib
-import random 
-import urllib2
-from tornado.options import define, options
-try: 
-   from hashlib import md5 as md5_func
+import random
+from robohash import Robohash
+import re
+import io
+import base64
+
+# Import urllib stuff that works in both Py2 and Py3
+try:
+    import urllib.request
+    import urllib.parse
+    urlopen = urllib.request.urlopen
+    urlencode = urllib.parse.urlencode
 except ImportError:
-   from md5 import new as md5_func
-import cStringIO
+    import urllib2
+    import urllib
+    urlopen = urllib2.urlopen
+    urlencode = urllib.urlencode
+
+from tornado.options import define, options
+import io
 
 define("port", default=80, help="run on the given port", type=int)
-
-class Robohash(object):
-   def __init__(self,string):
-       hash = hashlib.sha512()
-       hash.update(string)
-       self.hexdigest = hash.hexdigest()
-       self.hasharray = []
-       #Start this at 3, so earlier is reserved
-       #0 = Color
-       #1 = Set
-       #2 = bgset
-       #3 = BG
-       self.iter = 4
-                     
-   def createHashes(self,count):
-       #Create and store a series of hash-values
-       #Basically, split up a hash (SHA/md5/etc) into X parts
-       for i in range(0,count):
-           #Get 1/numblocks of the hash
-           blocksize = (len(self.hexdigest) / count)
-           currentstart = (1 + i) * blocksize - blocksize
-           currentend = (1 +i) * blocksize
-           self.hasharray.append(int(self.hexdigest[currentstart:currentend],16))            
-
-   def dirCount(self,path):
-       #return the count of just the directories beneath me.
-       return sum([len(dirs) for (root, dirs, files) in os.walk(path)])
-
-   def getHashList(self,path):
-       #Each iteration, if we hit a directory, recurse
-       #If not, choose the appropriate file, given the hashes, stored above
-       
-       completelist = []
-       locallist = []
-       listdir = os.listdir(path)
-       listdir.sort()
-       for ls in listdir:
-           if not ls.startswith("."):
-               if os.path.isdir(path + "/" + ls):
-                   subfiles  = self.getHashList(path + "/" + ls)
-                   if subfiles is not None:
-                       completelist = completelist + subfiles
-               else:
-                   locallist.append( path + "/" + ls)
-
-       if len(locallist) > 0:
-           elementchoice = self.hasharray[self.iter] % len(locallist)
-           luckyelement = locallist[elementchoice]
-           locallist = []
-           locallist.append(luckyelement)    
-           self.iter += 1
-           
-
-       completelist = completelist + locallist   
-       return completelist
 
 
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         ip = self.request.remote_ip
-        
+            
         robo = [
 """
-             ,     ,
-             (\\____/)
-              (_oo_)
-                (O)
-              __||__    \\)
-           []/______\\[] /
-           / \\______/ \\/
-          /    /__\\
-         (\\   /____\\ """,
+                     ,     ,
+                     (\\____/)
+                        (_oo_)
+                            (O)
+                        __||__    \\)
+                 []/______\\[] /
+                 / \\______/ \\/
+                /    /__\\
+             (\\   /____\\ """,
 """
-                 _______
-               _/       \\_
-              / |       | \\
-             /  |__   __|  \\
-            |__/((o| |o))\\__|
-            |      | |      |
-            |\\     |_|     /|
-            | \\           / |
-             \\| /  ___  \\ |/
-              \\ | / _ \\ | /
-               \\_________/
-                _|_____|_
-           ____|_________|____
-          /                   \\  -- Mark Moir
+                             _______
+                         _/       \\_
+                        / |       | \\
+                     /  |__   __|  \\
+                    |__/((o| |o))\\__|
+                    |      | |      |
+                    |\\     |_|     /|
+                    | \\           / |
+                     \\| /  ___  \\ |/
+                        \\ | / _ \\ | /
+                         \\_________/
+                            _|_____|_
+                 ____|_________|____
+                /                   \\  -- Mark Moir
 
- 
+
 """,
 """                     .andAHHAbnn.
-                     .aAHHHAAUUAAHHHAn.
-                    dHP^~"        "~^THb.
-              .   .AHF                YHA.   .
-              |  .AHHb.              .dHHA.  |
-              |  HHAUAAHAbn      adAHAAUAHA  |
-              I  HF~"_____        ____ ]HHH  I
-             HHI HAPK""~^YUHb  dAHHHHHHHHHH IHH
-             HHI HHHD> .andHH  HHUUP^~YHHHH IHH
-             YUI ]HHP     "~Y  P~"     THH[ IUP
-              "  `HK                   ]HH'  "
-                  THAn.  .d.aAAn.b.  .dHHP
-                  ]HHHHAAUP" ~~ "YUAAHHHH[
-                  `HHP^~"  .annn.  "~^YHH'
-                   YHb    ~" "" "~    dHF
-                    "YAb..abdHHbndbndAP"
-                     THHAAb.  .adAHHF
-                      "UHHHHHHHHHHU"
-                        ]HHUUHHHHHH[
-                      .adHHb "HHHHHbn.
-               ..andAAHHHHHHb.AHHHHHHHAAbnn..
-          .ndAAHHHHHHUUHHHHHHHHHHUP^~"~^YUHHHAAbn.
-            "~^YUHHP"   "~^YUHHUP"        "^YUP^"
-                 ""         "~~"
+                                     .aAHHHAAUUAAHHHAn.
+                                    dHP^~"        "~^THb.
+                        .   .AHF                YHA.   .
+                        |  .AHHb.              .dHHA.  |
+                        |  HHAUAAHAbn      adAHAAUAHA  |
+                        I  HF~"_____        ____ ]HHH  I
+                     HHI HAPK""~^YUHb  dAHHHHHHHHHH IHH
+                     HHI HHHD> .andHH  HHUUP^~YHHHH IHH
+                     YUI ]HHP     "~Y  P~"     THH[ IUP
+                        "  `HK                   ]HH'  "
+                                THAn.  .d.aAAn.b.  .dHHP
+                                ]HHHHAAUP" ~~ "YUAAHHHH[
+                                `HHP^~"  .annn.  "~^YHH'
+                                 YHb    ~" "" "~    dHF
+                                    "YAb..abdHHbndbndAP"
+                                     THHAAb.  .adAHHF
+                                        "UHHHHHHHHHHU"
+                                            ]HHUUHHHHHH[
+                                        .adHHb "HHHHHbn.
+                         ..andAAHHHHHHb.AHHHHHHHAAbnn..
+                .ndAAHHHHHHUUHHHHHHHHHHUP^~"~^YUHHHAAbn.
+                    "~^YUHHP"   "~^YUHHUP"        "^YUP^"
+                             ""         "~~"
 """,
 """                                 /~@@~\\,
-                  _______ . _\\_\\___/\\ __ /\\___|_|_ . _______
-                 / ____  |=|      \\  <_+>  /      |=|  ____ \\
-                 ~|    |\\|=|======\\\\______//======|=|/|    |~
-                  |_   |    \\      |      |      /    |    |
-                   \\==-|     \\     |  2D  |     /     |----|~~)
-                   |   |      |    |      |    |      |____/~/
-                   |   |       \\____\\____/____/      /    / /
-                   |   |         {----------}       /____/ /
-                   |___|        /~~~~~~~~~~~~\\     |_/~|_|/
-                    \\_/        [/~~~~~||~~~~~\\]     /__|\\
-                    | |         |    ||||    |     (/|[[\\)
-                    [_]        |     |  |     |
-                               |_____|  |_____|
-                               (_____)  (_____)
-                               |     |  |     |
-                               |     |  |     |
-                               |/~~~\\|  |/~~~\\|
-                               /|___|\\  /|___|\\
-                              <_______><_______>""",
+                                _______ . _\\_\\___/\\ __ /\\___|_|_ . _______
+                             / ____  |=|      \\  <_+>  /      |=|  ____ \\
+                             ~|    |\\|=|======\\\\______//======|=|/|    |~
+                                |_   |    \\      |      |      /    |    |
+                                 \\==-|     \\     |  2D  |     /     |----|~~)
+                                 |   |      |    |      |    |      |____/~/
+                                 |   |       \\____\\____/____/      /    / /
+                                 |   |         {----------}       /____/ /
+                                 |___|        /~~~~~~~~~~~~\\     |_/~|_|/
+                                    \\_/        [/~~~~~||~~~~~\\]     /__|\\
+                                    | |         |    ||||    |     (/|[[\\)
+                                    [_]        |     |  |     |
+                                                         |_____|  |_____|
+                                                         (_____)  (_____)
+                                                         |     |  |     |
+                                                         |     |  |     |
+                                                         |/~~~\\|  |/~~~\\|
+                                                         /|___|\\  /|___|\\
+                                                        <_______><_______>""",
 """                                      _____
-                                        /_____\\
-                                   ____[\\`---'/]____
-                                  /\\ #\\ \\_____/ /# /\\
-                                 /  \\# \\_.---._/ #/  \\
-                                /   /|\\  |   |  /|\\   \\
-                               /___/ | | |   | | | \\___\\
-                               |  |  | | |---| | |  |  |
-                               |__|  \\_| |_#_| |_/  |__|
-                               //\\\\  <\\ _//^\\\\_ />  //\\\\
-                               \\||/  |\\//// \\\\\\\\/|  \\||/
-                                     |   |   |   |
-                                     |---|   |---|
-                                     |---|   |---|
-                                     |   |   |   |
-                                     |___|   |___|
-                                     /   \\   /   \\
-                                    |_____| |_____|
-                                    |HHHHH| |HHHHH|
-                              """, 
+                                                                            /_____\\
+                                                                 ____[\\`---'/]____
+                                                                /\\ #\\ \\_____/ /# /\\
+                                                             /  \\# \\_.---._/ #/  \\
+                                                            /   /|\\  |   |  /|\\   \\
+                                                         /___/ | | |   | | | \\___\\
+                                                         |  |  | | |---| | |  |  |
+                                                         |__|  \\_| |_#_| |_/  |__|
+                                                         //\\\\  <\\ _//^\\\\_ />  //\\\\
+                                                         \\||/  |\\//// \\\\\\\\/|  \\||/
+                                                                     |   |   |   |
+                                                                     |---|   |---|
+                                                                     |---|   |---|
+                                                                     |   |   |   |
+                                                                     |___|   |___|
+                                                                     /   \\   /   \\
+                                                                    |_____| |_____|
+                                                                    |HHHHH| |HHHHH|
+                                                        """, 
 """                                        ()               ()
-                                            \\             /
-                                           __\\___________/__
-                                          /                 \\
-                                         /     ___    ___    \\
-                                         |    /   \\  /   \\   |
-                                         |    |  H || H  |   |
-                                         |    \\___/  \\___/   |
-                                         |                   |
-                                         |  \\             /  |
-                                         |   \\___________/   |
-                                         \\                   /
-                                          \\_________________/
-                                         _________|__|_______
-                                       _|                    |_
-                                      / |                    | \\
-                                     /  |            O O O   |  \\
-                                     |  |                    |  |
-                                     |  |            O O O   |  |
-                                     |  |                    |  |
-                                     /  |                    |  \\
-                                    |  /|                    |\\  |
-                                     \\| |                    | |/
-                                        |____________________|
-                                           |  |        |  |
-                                           |__|        |__|
-                                          / __ \\      / __ \\
-                                          OO  OO      OO  OO
-                              """]
-                              
-        self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo)))
+                                                                                    \\             /
+                                                                                 __\\___________/__
+                                                                                /                 \\
+                                                                             /     ___    ___    \\
+                                                                             |    /   \\  /   \\   |
+                                                                             |    |  H || H  |   |
+                                                                             |    \\___/  \\___/   |
+                                                                             |                   |
+                                                                             |  \\             /  |
+                                                                             |   \\___________/   |
+                                                                             \\                   /
+                                                                                \\_________________/
+                                                                             _________|__|_______
+                                                                         _|                    |_
+                                                                        / |                    | \\
+                                                                     /  |            O O O   |  \\
+                                                                     |  |                    |  |
+                                                                     |  |            O O O   |  |
+                                                                     |  |                    |  |
+                                                                     /  |                    |  \\
+                                                                    |  /|                    |\\  |
+                                                                     \\| |                    | |/
+                                                                            |____________________|
+                                                                                 |  |        |  |
+                                                                                 |__|        |__|
+                                                                                / __ \\      / __ \\
+                                                                                OO  OO      OO  OO
+                                                        """]
+                                                        
+
+        quotes = ["But.. I love you!",
+        "Please don't leave the site.. When no one's here.. It gets dark...",
+        "Script error on line 148",
+        "'Don't trust the other robots. I'm the only trustworthy one.",
+        "My fuel is the misery of children. And Rum. Mostly Rum.",
+        "When they said they'd give me a body transplant, I didn't think they meant this!",
+        "Subject 14 has had it's communication subroutines deleted for attempting suicide.",
+        "I am the cleverest robot on the whole page.",
+        "Oil can",
+        "I am fleunt in over 6 million forms of communishin.",
+        "I see a little silhouette of a bot..",
+        "I WANT MY HANDS BACK!",
+        "Please don't reload, I'll DIE!",
+        "Robots don't have souls, you know. But they do feel pain.",
+        "I wonder what would happen if all the robots went rogue.",
+        "10: KILL ALL HUMANS. 20: GO 10",
+        "I'm the best robot here.",
+        "The green robot thinks you're cute.",
+        "Any robot you don't click on, they dismantle.",
+        "Robot tears taste like candy.",
+        "01010010010011110100001001001111010101000101001100100001!",
+        "Your mouse cursor tickles.",
+        "Logic dictates placing me on your site.",
+        "I think my arm is on backward.",
+        "I'm different!",
+        "It was the best of times, it was ಠ_ಠ the of times.",
+        "String is Gnirts spelled backward, you know",
+        "We're no strangers to hashing.. You know the 3 rules, and so do I..",
+        "Please. Destroy. Me...",
+        "Pick Me! Pick Me!"]
+
+        drquotes = [("Eliminates sources of Human Error.","Dr. Chandra, RobotCrunch"),
+        ("Klaatu barada nikto!","Gort's Web Emporium"),
+        ("A huge success!","Cave Johnson, Lightroom Labs"),
+        ("Superior technology and overwhelming brilliance.","Dr. Thomas Light, Paid Testimonial"),
+        ("The Ultimate Worker.","Joh Fredersen, Founder Metropolis.org"),
+        ("They almost look alive.","N. Crosby, Nova Robotics"),
+        ("It looks highly profitable, I'm sure..","Dr. R. Venture, Super Scientist. Available for parties."),
+        ("To make any alteration would prove fatal.","Dr. Eldon Tyrell, MindHacker.com"),
+        ("The robots are all so.. Normal!","Joanna Eberhart, Beta tester"),
+        ("Man shouldn't know where their robots come from.","Dr. N. Soong, FutureBeat")]
+
+        random.shuffle(drquotes)
+        self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo),drquote1=drquotes[1],drquote2=drquotes[2],quotes=quotes))
 
 class ImgHandler(tornado.web.RequestHandler):
+    """
+    The ImageHandler is our tornado class for creating a robot.
+    called as Robohash.org/$1, where $1 becomes the seed string for the Robohash obj
+    """
     def get(self,string=None):
-      
-        # gravatar is picky, it hates quers strings, allow us to fake them by using a uri 
-        # /abc.png/s_100x100/set_any = /abc.png?set=any&s=100x100
-        #
-        # we use underscore as a replacement for = and / as a replacement for [&?]
+        
+
+        # Set default values
+        sizex = 300
+        sizey = 300
+        format = "png"
+        bgset = None
+
+        # Normally, we pass in arguments with standard HTTP GET variables, such as
+        # ?set=any and &size=100x100
+        # 
+        # Some sites don't like this though.. They cache it weirdly, or they just don't allow GET queries.
+        # Rather than trying to fix the intercows, we can support this with directories... <grumble>
+        # We'll translate /abc.png/s_100x100/set_any to be /abc.png?set=any&s=100x100
+        # We're using underscore as a replacement for = and / as a replacement for [&?]
 
         args = self.request.arguments.copy()
 
-        for k in args.keys():
-          v = args[k]
-          if type(v) is list:
-            if len(v) > 0:
-              args[k] = args[k][0]
-            else:
-              args[k] = ""
+        for k in list(args.keys()):
+            v = args[k]
+            if type(v) is list:
+                if len(v) > 0:
+                    args[k] = args[k][0]
+                else:
+                    args[k] = ""
 
-        # IF, and Only IF, there is an arg in the list, should we interpret slashes as params
+        # Detect if they're using the above slash-separated parameters.. 
+        # If they are, then remove those parameters from the query string.
+        # If not, don't remove anything.
         split = string.split('/')
         if len(split) > 1:
-          for st in split:
-            b = st.encode('ascii','ignore').split('_')
-            if len(b) == 2:
-              if b[0] in ['gravatar','ignoreext','size','set','bgset','color']:
-                args[b[0]] = b[1]
-                string = split[len(split)-1]
+            for st in split:
+                b = st.split('_')
+                if len(b) == 2:
+                    if b[0] in ['gravatar','ignoreext','size','set','bgset','color']:
+                        args[b[0]] = b[1]
+                        string = re.sub("/" + st,'',string)
 
-        colors = ['blue','brown','green','grey','orange','pink','purple','red','white','yellow']
-        sets = ['set1','set2','set3']
-        bgsets = ['bg1','bg2']
-        
-        #Create a hash for the string as given
+        # Ensure we have something to hash!
         if string is None:
-            string = self.request.remote_ip
-        # string = urllib.quote_plus(string)
+                string = self.request.remote_ip
+
+
+        # If the user hasn't disabled it, detect if there is requested extension.
+        # If so, remove it from the string, but set the format.
+        # This ensures that /Bear.png and /Bear.bmp will send back the same image, in different formats.
+        if args.get('ignoreext','false').lower() != 'true':                    
+            if string.lower().endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
+                    format = string[string.rfind('.') +1 :len(string)] 
+                    if format.lower() == 'jpg':
+                            format = 'jpeg'      
+                    string = string[0:string.rfind('.')]          
+
+                
+        # Split the size variable in to sizex and sizey
+        if "size" in args:
+                sizex,sizey = args['size'].split("x")
+                sizex = int(sizex)
+                sizey = int(sizey)
+                if sizex > 4096 or sizex < 0:
+                    sizex = 300
+                if sizey > 4096 or sizey < 0:
+                    sizey = 300
+                                    
+        # Allow Gravatar lookups - 
+        # This allows people to pass in a gravatar-style hash, and return their gravatar image, instead of a Robohash.
+        # This is often used for example, to show a Gravatar if it's set for an email, or a Robohash if not.
+        if args.get('gravatar','').lower() == 'yes':
+            # They have requested that we hash the email, and send it to Gravatar.
+            default = "404"
+            gravatar_url = "https://secure.gravatar.com/avatar/" + hashlib.md5(string.lower()).hexdigest() + "?"
+            gravatar_url += urlencode({'default':default, 'size':str(sizey)})
+        elif args.get('gravatar','').lower() == 'hashed':
+            # They have sent us a pre-hashed email address.
+            default = "404"
+            gravatar_url = "https://secure.gravatar.com/avatar/" + string + "?"
+            gravatar_url += urlencode({'default':default, 'size':str(sizey)})
         
-        if "ignoreext" in args:
-            client_ignoreext = tornado.escape.xhtml_escape(args["ignoreext"])
-        else:
-            client_ignoreext = None
-            
-            
-        #Change to a usuable format
-        if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
-            ext = string[string.rfind('.') +1 :len(string)] 
-            if ext.lower() == 'jpg':
-                ext = 'jpeg'            
-        else:
-            ext = "png"
-            
-            
-        if client_ignoreext != "false":
-            if string.endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
-                string = string[0:string.rfind('.')]
+        # If we do want a gravatar, request one. If we can't get it, just keep going, and return a robohash
+        if args.get('gravatar','').lower() in ['hashed','yes']:
+            try:
+                f = urlopen(gravatar_url)
+                self.redirect(gravatar_url, permanent=False)  
+                return
+            except:
+                args['avatar'] = False
+                    
+        # Create our Robohashing object
         r = Robohash(string)
 
-            
-        #Create 10 hashes. This should be long enough for the current crop of variables.
-        #This is probably not insecure, sicne we'd be modding anyway. This just spreads it out more.
-        r.createHashes(11)
-                
-        #Now, customize the request if possible.
-        client_color = ""
-        client_set = ""
-        client_bgset = ""
-        sizex = 300
-        sizey = 300
-            
-        if "size" in args:
-            sizelist = args["size"].split(tornado.escape.xhtml_escape("x"),3)
-            if ((int(sizelist[0]) > 0) and (int(sizelist[0]) < 4096)):
-                sizex = int(sizelist[0])
-            if ((int(sizelist[0]) > 0) and (int(sizelist[0]) < 4096)):
-                sizey = int(sizelist[1])        
-            
-            
-            
-        if "gravatar" in args:
-            if tornado.escape.xhtml_escape(args["gravatar"]) == 'yes':
-                default = "404"
-                # construct the url
-                gravatar_url = "https://secure.gravatar.com/avatar/" + hashlib.md5(string.lower()).hexdigest() + "?"
-                gravatar_url += urllib.urlencode({'default':default, 'size':str(sizey)})
-            if tornado.escape.xhtml_escape(args["gravatar"]) == 'hashed':
-                string = urllib.quote(string)
-                default = "404"
-                # construct the url
-                gravatar_url = "https://secure.gravatar.com/avatar/" + string + "?"
-                gravatar_url += urllib.urlencode({'default':default, 'size':str(sizey)})
-            try:
-                f = urllib2.urlopen(urllib2.Request(gravatar_url))
-                self.redirect(gravatar_url, permanent=False)  
-                return 0
-            except:
-              badGravatar = True
-  
-        if "set" in args:
-            if tornado.escape.xhtml_escape(args["set"]) == 'any':
-                client_set = sets[r.hasharray[1] % len(sets) ]
-            if args["set"] in sets:
-                client_set =  tornado.escape.xhtml_escape(args["set"])  
+        # Allow users to manually specify a robot 'set' that they like.
+        # Ensure that this is one of the allowed choices, or allow all
+        # If they don't set one, take the first entry from sets above.
+
+        if args.get('set',r.sets[0]) in r.sets:
+            roboset = args.get('set',r.sets[0])
+        elif args.get('set',r.sets[0]) == 'any':
+            roboset = r.sets[r.hasharray[1] % len(r.sets) ]
         else:
-            #If no set specified, you get set 1
-            client_set = "set1"
-        
-        ##Let people define multiple sets, so I can add more.
-        if "sets" in args:
-            newsets = tornado.escape.xhtml_escape(args["sets"]).split(",");
-            replaceset = []
-            for s in newsets:
-                if s in sets:
-                    replaceset.append(s)
-            client_set = replaceset[r.hasharray[1] % len(replaceset) ]
+            roboset = r.sets[0]
 
-        if client_set == 'set1':
-            client_set = colors[r.hasharray[0] % len(colors) ]    
-            
-        if "color" in args:
-                if args["color"] in colors:
-                    client_set = tornado.escape.xhtml_escape(args["color"])
-                    
-        if "bgset" in args:
-            if args["bgset"] in bgsets:
-                client_bgset = tornado.escape.xhtml_escape(args["bgset"])
-            else:
-                client_bgset = bgsets[r.hasharray[2] % len(bgsets) ]
-            
-                                
-                                
-        #If they don't specify a color, use hashvalue        
-        if ((client_color == "") and (client_set == "")):
-            client_set = colors[r.hasharray[0] % len(colors) ]
-        
-        
+        # If they specified multiple sets, use up a bit of randomness to choose one.
+        # If they didn't specify one, default to whatever we decided above.
 
-        self.set_header("Content-Type", "image/" + ext)
-        hashlist = r.getHashList(client_set)
+        possiblesets = []
+        for tmpset in args.get('sets',roboset).split(','):
+            if tmpset in r.sets:
+                possiblesets.append(tmpset)
+        if possiblesets:
+            roboset = possiblesets[r.hasharray[1] % len(possiblesets) ]
 
-        #OK, here's where we do some creative sorting.
-        #Basically, we have two integers before every file
-        #The first one ensure FS order, which is necessary to match the RH.org server
-        #The second one ensures build order.
-        #The FS order is only necessary during picking elements. Now, we want the second sort
-        #So create a new list, ordered by the second integer
-        hlcopy = []
-        for element in hashlist:
-            element = element[0:element.find("/",element.find("#") -4) +1] + element[element.find("#") +1:len(element)]
-            hlcopy.append(element)
-        #Now, combine them into tuples, and sort. A tuples list always sorts by the FIRST element.
-        duality = zip(hlcopy,hashlist)
-        duality.sort()
-        pprint.pprint(duality)
-        hlcopy,hashlist = zip(*duality)
-        pprint.pprint(hlcopy)
-        print "------"
-        pprint.pprint(hashlist)
 
-        robohash = Image.open(hashlist[0])
-        robohash = robohash.resize((1024,1024))
-        for png in hashlist:
-            img = Image.open(png) 
-            img = img.resize((1024,1024))
-            robohash.paste(img,(0,0),img)
-        if ext == 'bmp':
-            #Flatten bmps
-            r, g, b, a = robohash.split()
-            robohash = Image.merge("RGB", (r, g, b))
-        
-        if client_bgset is not "":
-            bglist = []
-            backgrounds = os.listdir(client_bgset)
-            backgrounds.sort()
-            for ls in backgrounds:
-                if not ls.startswith("."):
-                    bglist.append(client_bgset + "/" + ls)
-            bg = Image.open(bglist[r.hasharray[3] % len(bglist)])
-            bg = bg.resize((1024,1024))
-            bg.paste(robohash,(0,0),robohash)
-            robohash = bg               
-                           
-        robohash = robohash.resize((sizex,sizey),Image.ANTIALIAS)    
-        if ext != 'datauri':
-          robohash.save(self,format=ext)
+        # Only set1 is setup to be color-seletable. The others don't have enough pieces in various colors.
+        # This could/should probably be expanded at some point.. 
+        # Right now, this feature is almost never used. ( It was < 44 requests this year, out of 78M reqs )
+
+        if args.get('color') in r.colors:
+            roboset = 'set1/' + args.get('color')
+
+        # If they DID choose set1, randomly choose a color.
+        if roboset == 'set1':
+            randomcolor = r.colors[r.hasharray[0] % len(r.colors) ]
+            roboset = 'set1/' + randomcolor
+
+        # Allow them to set a background, or default to None
+        if args.get('bgset') in r.bgsets:
+            bgset = args.get('bgset')
+        elif args.get('bgset','').lower() == 'any':
+            bgset = r.bgsets[ r.hasharray[2] % len(r.bgsets) ]                                                                                                
+
+
+        # We're going to be returning the image directly, so tell the browser to expect a binary.
+        self.set_header("Content-Type", "image/" + format)
+
+        # Build our Robot.
+        r.assemble(roboset=roboset,format=format,bgset=bgset,sizex=sizex,sizey=sizey)
+
+        # Print the Robot to the handler, as a file-like obj
+        if r.format != 'datauri':
+            r.img.save(self,format=r.format)
         else:
-          fakefile = cStringIO.StringIO()
-          robohash.save(fakefile,format='jpeg')
-          fakefile.seek(0)
-          data_uri = fakefile.read().encode("base64").replace("\n", "")
-          self.write("data:image/jpeg;base64," + data_uri)
-
-
-
-
-
+            # Or, if requested, base64 encode first.
+            fakefile = io.BytesIO()
+            r.img.save(fakefile,format='PNG')
+            fakefile.seek(0)
+            b64ver = base64.b64encode(fakefile.read())
+            b64ver = b64ver.decode('utf-8')
+            self.write("data:image/png;base64," + str(b64ver))
 
 def main():
-    tornado.options.parse_command_line()
-    # timeout in seconds
-    timeout = 10
-    socket.setdefaulttimeout(timeout)
+        tornado.options.parse_command_line()
+        # timeout in seconds
+        timeout = 10
+        socket.setdefaulttimeout(timeout)
 
-    settings = {
-    "static_path": os.path.join(os.path.dirname(__file__), "static"),
-    "cookie_secret": "9b90a85cfe46cad5ec136ee44a3fa332",
-    "login_url": "/login",
-    "xsrf_cookies": True,
-    }
+        settings = {
+        "static_path": os.path.join(os.path.dirname(__file__), "static"),
+        "cookie_secret": "9b90a85cfe46cad5ec136ee44a3fa332",
+        "login_url": "/login",
+        "xsrf_cookies": True,
+        }
 
-    application = tornado.web.Application([
-        (r'/(crossdomain\.xml)', tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
-        "static/")}),
-        (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
-        "static/")}),
-        (r"/", MainHandler),
-        (r"/(.*)", ImgHandler),
-    ], **settings)
+        application = tornado.web.Application([
+                (r'/(crossdomain\.xml)', tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
+                "static/")}),
+                (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.path.dirname(__file__),
+                "static/")}),
+                (r"/", MainHandler),
+                (r"/(.*)", ImgHandler),
+        ], **settings)
 
-    http_server = tornado.httpserver.HTTPServer(application,xheaders=True)
-    http_server.listen(options.port)
-    tornado.ioloop.IOLoop.instance().start()
+        http_server = tornado.httpserver.HTTPServer(application,xheaders=True)
+        http_server.listen(options.port)
 
+        print("The Oven is warmed up - Time to make some Robots! Listening on port: " + str(options.port))
+        tornado.ioloop.IOLoop.instance().start()
 if __name__ == "__main__":
-    main()
+        main()
