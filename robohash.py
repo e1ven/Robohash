@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 import os
 import hashlib
-import Image
+from PIL import Image
 
 class Robohash(object):
     """
