@@ -2,6 +2,7 @@
 import os
 import hashlib
 from PIL import Image
+import natsort
 
 class Robohash(object):
     """
@@ -73,7 +74,7 @@ class Robohash(object):
              self.hasharray.append(int(self.hexdigest[currentstart:currentend],16))            
 
     def _listdirs(self,path):
-        return [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+        return [d for d in natsort.natsorted(os.listdir(path)) if os.path.isdir(os.path.join(path, d))]
 
     def _get_list_of_files(self,path):
         """
@@ -84,18 +85,20 @@ class Robohash(object):
 
         # Get a list of all subdirectories
         directories = []
-        for root, dirs, files in os.walk(path, topdown=False):
+        for root, dirs, files in natsort.natsorted(os.walk(path, topdown=False)):
             for name in dirs:
                 if name[:1] is not '.':
                     directories.append(os.path.join(root, name))
-
+                    directories = natsort.natsorted(directories)
+                    
         # Go through each directory in the list, and choose one file from each.
         # Add this file to our master list of robotparts.
         for directory in directories:
             files_in_dir = []
-            for imagefile in os.listdir(directory):
+            for imagefile in natsort.natsorted(os.listdir(directory)):
                 files_in_dir.append(os.path.join(directory,imagefile))
-
+                files_in_dir = natsort.natsorted(files_in_dir)
+                
             # Use some of our hash bits to choose which file
             element_in_list = self.hasharray[self.iter] % len(files_in_dir)
             chosen_files.append(files_in_dir[element_in_list])
@@ -151,14 +154,16 @@ class Robohash(object):
         # For instance, the head has to go down BEFORE the eyes, or the eyes would be hidden.
 
         # First, we'll get a list of parts of our robot.
+        
 
         roboparts = self._get_list_of_files(self.resourcedir + 'sets/' + roboset)
+        print(roboparts)
         # Now that we've sorted them by the first number, we need to sort each sub-category by the second.
         roboparts.sort(key=lambda x: x.split("#")[1])
-
+        print(roboparts)
         if bgset is not None:
                 bglist = []
-                backgrounds = os.listdir(self.resourcedir + 'backgrounds/' + bgset)
+                backgrounds = natsort.natsorted(os.listdir(self.resourcedir + 'backgrounds/' + bgset))
                 backgrounds.sort()
                 for ls in backgrounds:
                         if not ls.startswith("."):
