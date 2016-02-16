@@ -343,6 +343,7 @@ class ImgHandler(tornado.web.RequestHandler):
                                                                                          
         # We're going to be returning the image directly, so tell the browser to expect a binary.
         self.set_header("Content-Type", "image/" + format)
+        self.set_header("Cache-Control", "public,max-age=31536000")
 
         # Build our Robot.
         r.assemble(roboset=roboset,format=format,bgset=bgset,color=color,sizex=sizex,sizey=sizey)
