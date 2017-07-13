@@ -1,6 +1,9 @@
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
-with open('README.txt') as file:
+with open('README.rst') as file:
     long_description = file.read()
 
 setup(
@@ -10,7 +13,7 @@ setup(
     description='One of the leading robot-based hashing tools on the web',
     long_description=long_description,
     author='Colin Davis',
-    author_email='cdavis@tavern.is',
+    author_email='colin@robohash.org',
     url='https://github.com/e1ven/Robohash',
     download_url='https://github.com/e1ven/Robohash/tarball/1.0',
     keywords=['robots'], # arbitrary keywords
