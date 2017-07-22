@@ -15,7 +15,7 @@ colin@robohash.org
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>RoboHash</title>
 <link href="/static/css/main.css" rel="stylesheet" type="text/css" />
@@ -81,24 +81,24 @@ $(document).ready(function(){
 
       <script type='text/javascript'>
   $(function() {
-    
+
     $('#example-1').tipsy();
-    
+
     $('#north').tipsy({gravity: 'n'});
     $('#south').tipsy({gravity: 's'});
     $('#east').tipsy({gravity: 'e'});
     $('#west').tipsy({gravity: 'w'});
-    
+
     $('#auto-gravity').tipsy({gravity: $.fn.tipsy.autoNS});
-    
+
     $('.fade').tipsy({fade: true});
-    
+
     $('#example-custom-attribute').tipsy({title: 'id'});
     $('#example-callback').tipsy({title: function() { return this.getAttribute('original-title').toUpperCase(); } });
     $('#example-fallback').tipsy({fallback: "?" });
-    
+
     $('#example-html').tipsy({html: true });
-    
+
   });
 </script>
 
@@ -114,7 +114,7 @@ $(document).ready(function(){
 
 <!-- start of top logo -->
 <div id="top_logo">
-	
+
 
   <img src="//robohash.org/static/img/top_logo.png" width="375" height="151" alt="logo" id="toc"/></div><!-- end of top logo -->
 
@@ -167,22 +167,22 @@ $(document).ready(function(){
  <div class="section_title">How cool is this?</div>
  <p> That guy to your left there? He was specially generated from your IP address  <i>Just for you.</i></p>
 <div class="container" >
-	<div class="contain-right" style="width:60%; float:right;">	
+	<div class="contain-right" style="width:60%; float:right;">
 		<p>Try on your phone, and I bet you get someone different!</p>
   		<p>Keep scrolling down to see some more freshly-assembled RoboHashes.</p>
 
 
 
 
-<script type="text/javascript"> 
+<script type="text/javascript">
 
-function stopRKey(evt) { 
-  var evt = (evt) ? evt : ((event) ? event : null); 
-  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
-  if ((evt.keyCode == 13) && (node.type=="text"))  {submitform(); return false;} 
-} 
+function stopRKey(evt) {
+  var evt = (evt) ? evt : ((event) ? event : null);
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+  if ((evt.keyCode == 13) && (node.type=="text"))  {submitform(); return false;}
+}
 
-document.onkeypress = stopRKey; 
+document.onkeypress = stopRKey;
 
 </script>
 
@@ -202,7 +202,7 @@ function submitform()
 
 
 	</div>
-	<div class="contain-left" >	
+	<div class="contain-left" >
   		<img src="//robohash.org/static/img/down-arrow.png" alt="Scroll down!" height=200 class="left" />
 	</div>
 </div>
@@ -229,7 +229,7 @@ function submitform()
   <img src="//robohash.org/static/img/star.png" width="33" height="31" alt="1 star" />
   <img src="//robohash.org/static/img/star.png" width="33" height="31" alt="1 star" />
   <img src="//robohash.org/static/img/star.png" width="33" height="31" alt="1 star" />
-  <img src="//robohash.org/static/img/star.png" width="33" height="31" alt="1 star" /> 
+  <img src="//robohash.org/static/img/star.png" width="33" height="31" alt="1 star" />
   <br />
   <span class="large_quote">{{drquote1[0]}}</span>
   <br />
@@ -269,7 +269,7 @@ function submitform()
 			{% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set1" %}
 			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set1" %}
 			{% set c5 =  ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set1" %}
-			
+
 			<li><a href="//robohash.org/{{c1}}" rel="prettyPhoto[gallery1]"
             title="{{random.choice(quotes)}}" class="fade"><img src="//robohash.org/{{c1}}&size=150x150" width="150" height="150"/></a></li>
 			<li><a href="//robohash.org/{{c2}}" rel="prettyPhoto[gallery1]"
@@ -293,16 +293,16 @@ function submitform()
 
 <!-- start of content section -->
 <div class="content_section">
- 
+
   <p>By appending ?set=set2 to our Image's URLs, we are able to generate a whole slew of Random monsters. Here are 5 we picked out for you.  </p>
-  
+
   <ul class="gallery">
 			{% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
 			{% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
 			{% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
 			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
 			{% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set2" %}
-			
+
 			<li><a href="//robohash.org/{{c1}}" rel="prettyPhoto[gallery1]"
             title="{{random.choice(quotes)}}" class="fade"><img src="//robohash.org/{{c1}}&size=150x150" width="150" height="150" /></a></li>
 			<li><a href="//robohash.org/{{c2}}" rel="prettyPhoto[gallery1]"
@@ -326,16 +326,16 @@ function submitform()
 
 <!-- start of content section -->
 <div class="content_section">
- 
+
   <p>By appending ?set=set3 to our URLs, we get back to robots. New, suave, disembodied heads. That's sexy. Like a robot. </p>
-  
+
   <ul class="gallery">
 			{% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
 			{% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
 			{% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
 			{% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
 			{% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set3" %}
-			
+
 			<li><a href="//robohash.org/{{c1}}" rel="prettyPhoto[gallery1]"
             title="{{random.choice(quotes)}}" class="fade"><img src="//robohash.org/{{c1}}&size=150x150" width="150" height="150" /></a></li>
 			<li><a href="//robohash.org/{{c2}}" rel="prettyPhoto[gallery1]"
@@ -352,6 +352,37 @@ function submitform()
 
 <div class="hr"></div>
 
+<!-- *************************************************************************
+******************************  GALLERY3 SECTION  *****************************
+************************************************************************** -->
+
+<!-- start of content section -->
+<div class="content_section">
+
+  <p>By appending ?set=set4 to our URLs, we can hydroponically grow beautiful kittens. </p>
+
+  <ul class="gallery">
+      {% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set4" %}
+      {% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set4" %}
+      {% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set4" %}
+      {% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set4" %}
+      {% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set4" %}
+
+      <li><a href="//robohash.org/{{c1}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(catquotes)}}" class="fade"><img src="//robohash.org/{{c1}}&size=150x150" width="150" height="150" /></a></li>
+      <li><a href="//robohash.org/{{c2}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(catquotes)}}" class="fade"><img src="//robohash.org/{{c2}}&size=150x150" width="150" height="150" /></a></li>
+            <li><a href="//robohash.org/{{c3}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(catquotes)}}" class="fade"><img src="//robohash.org/{{c3}}&size=150x150" width="150" height="150" /></a></li>
+            <li><a href="//robohash.org/{{c4}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(catquotes)}}" class="fade"><img src="//robohash.org/{{c4}}&size=150x150" width="150" height="150" /></a></li>
+            <li><a href="//robohash.org/{{c5}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(catquotes)}}" class="fade"><img src="//robohash.org/{{c5}}&size=150x150" width="150" height="150" /></a></li>
+  </ul>
+
+</div><!-- end of content section -->
+
+<div class="hr"></div>
 
 
 
@@ -368,62 +399,62 @@ function submitform()
 <div class="left_content">
 
 	<!-- ********** BENEFITS ITEM 1 ********** -->
-    
+
     <!-- start of benefit item -->
 	<div class="benefit">
 
   		<img src="//robohash.org/static/img/star_icon.jpg" width="73" height="72" alt="Super Easy to use" class="left"/>
-  
+
   		<!-- start of benefit right -->
   		<div class="benefit_right">
-  
+
   			<span class="benefit_header">Super Easy</span>
   			<p>Anytime you need a Robohash, just embed <br> &lt;img src="https://robohash.org/YOUR-TEXT.png"&gt;<br></p>
-  		
+
         </div><!-- end of benefit right -->
-  
+
   	</div><!-- end of benefit item -->
 
 
-    
+
     <!-- ********** BENEFITS ITEM 2 ********** -->
-    
+
     <!-- start of benefit item -->
 	<div class="benefit">
 
 	  <img src="//robohash.org/static/img/report_icon.jpg" width="73" height="72" alt="Supported Formats" class="left"/>
-  
+
   		<!-- start of benefit right -->
   		<div class="benefit_right">
-  
+
   			<span class="benefit_header">Styles of Robot</span>
   			<p>Want a JPG instead? Fine. PNG? Fine. Want it as a bitmap? I think you're nutty. But fine. Just change the
             URL to request in any format you want. Use ?ignoreext=false to make the bots care about extensions.</p>
-  		
+
         </div><!-- end of benefit right -->
-  
+
   	</div><!-- end of benefit item -->
 
 
-    
+
     <!-- ********** BENEFITS ITEM 3 ********** -->
-    
+
     <!-- start of benefit item -->
 	<div class="benefit">
 
   		<img src="//robohash.org/static/img/tut_icon.jpg" width="73" height="72" alt="Very infrequent murderous rampages." class="left"/>
-  
+
   		<!-- start of benefit right -->
   		<div class="benefit_right">
-  
+
   			<span class="benefit_header">Very Infrequent Rampages</span>
   			<p>Due to Robot caching modules and CDN usage, our robots stay speedy, and only rarely go on murderous rampages. That's a Fact!</p>
-  		
+
       </div><!-- end of benefit right -->
-  
+
   	</div><!-- end of benefit item -->
-  
-  
+
+
   </div><!-- end of left content section -->
 
 
@@ -432,80 +463,80 @@ function submitform()
 <div class="right_content">
 
 	<!-- ********** BENEFITS ITEM 1 ********** -->
-    
+
     <!-- start of benefit item -->
 	<div class="benefit">
 
   		<img src="//robohash.org/static/img/share_icon.jpg" width="73" height="72" alt="3 classes to choose from" class="left"/>
-  
+
   		<!-- start of benefit right -->
 	  <div class="benefit_right">
-  
+
   			<span class="benefit_header">Built in multiple sizes</span>
   			<p>From destroying skyscrapers to nonobots, we've got you covered. Try appending ?size=200x200</p>
         </div><!-- end of benefit right -->
-  
+
   	</div><!-- end of benefit item -->
-    
+
     <!-- ********** BENEFITS ITEM 2 ********** -->
-    
+
     <!-- start of benefit item -->
 	<div class="benefit">
 
 	  <img src="//robohash.org/static/img/usability_icon.jpg" width="73" height="72" alt="Robots on Vacation" class="left"/>
-  
+
   		<!-- start of benefit right -->
 	  <div class="benefit_right">
-  
+
   			<span class="benefit_header">Robots at your Location</span>
   			<p>Our robots like to travel. If you append ?bgset=bg1 (or bg2 or any) to your URL, our robots will add a background as part of the hash.</p>
-  		
+
         </div><!-- end of benefit right -->
-  
+
   	</div><!-- end of benefit item -->
-    
+
     <!-- ********** BENEFITS ITEM 3 ********** -->
-    
+
     <!-- start of benefit item -->
 	<div class="benefit">
 
 	  <img src="//robohash.org/static/img/usability_icon.jpg" width="73" height="72" alt="Robotic Values" class="left"/>
-  
+
   		<!-- start of benefit right -->
 	  <div class="benefit_right">
-  
+
   			<span class="benefit_header">Robotic Value</span>
   			<p>Robohash.org robots believe in Family, Warmth, and killing-all-humans. To that end, we provide this service for free. </p>
-  		
+
         </div><!-- end of benefit right -->
-  
+
   	</div><!-- end of benefit item -->
-  
+
   </div><!-- end of right content section -->
-  
-</div><!-- end of content section --> 
+
+</div><!-- end of content section -->
 
 <div class="hr"></div>
-	
-	
+
+
 	<!-- start of content section -->
 	<div class="content_section">
 
 	 <div class="section_title">Everyone needs Robots!</div>
 	<p>
 	RoboHash.org is here because Robots are funny, and because I needed the algorithm/art anyway for a Super-Awesome new forum I'm working on. If you use a specific set, or a list of them, like "?sets=1,3"  , it'll probably stay the same as it is now. If you use "set=any", it'll include any new sets I happen to add, so existing hashes may change. </p><p>
-	
+
 	You should email me -
-	
+
 	<a href="mailto:colin@robohash.org" class="fade" title="I am probably not a robot.">colin@robohash.org</a>
 </p><p>
-	
+
 	If the bandwidth gets crazy, I might add a [Robohash.org] banner to the bottom of the image. But it'd be super-tasteful.<br>
 </p>
 
 	</div><!-- end of content section -->
 
-  
+
   <!-- start of content section -->
   <div class="content_section">
 
@@ -517,7 +548,6 @@ function submitform()
     Put either the email, or the hashed version, in your image where the string normally goes -<br><br>
     For example: https://robohash.org/colin@robohash.org?gravatar=yes<br> or https://robohash.org/620050a4db5104bae758cd75171d64ca?gravatar=hashed
     </p><p>
-    <p>Both traditional and new Stealthy (https) robots are available.</p> 
     <p>We've also conditioned our robots to accept commands either via params or directories-<br> For instance https://robohash.org/set_set3/bgset_bg1/3.14159?size=500x500
     <p>Finally, the <a href="https://github.com/e1ven/Robohash">Blueprints are available</a> to build your own robotic
     factory.</p>
@@ -528,12 +558,12 @@ function submitform()
 
 
 	<div class="hr"></div>
-	
 
-	 
-	
-	
-	
+
+
+
+
+
 	</div><!-- end of wrapper -->
 <!-- *************************************************************************
 ******************************  FOOTER SECTION  ******************************
@@ -546,9 +576,10 @@ function submitform()
 <!-- start of footer container -->
 <div id="footer_container">
 <!-- start of footer left -->
-<div id="footer_left" style="margin-top:60px;"> 
+<div id="footer_left" style="margin-top:60px;">
 <p>
-Robohash contains robots created by Zikri Kader (set1), Hrvoje Novakovic (set2), and Julian Peter Arias (set3).
+Robohash contains robots created by Zikri Kader (set1), Hrvoje Novakovic (set2), and Julian Peter Arias (set3).<br>
+Cats are created by <a href="https://framagit.org/Deevad/cat-avatar-generator/tree/master">David Revoy</a>.
 <br>
 <p>
 You are free to embed under the terms of the CC-BY license. <br> Example wording might be "Robots lovingly delivered by

@@ -33,7 +33,7 @@ class Robohash(object):
         #3 = BG
         self.iter = 4
         self._create_hashes(hashcount)
-        
+
         self.resourcedir = os.path.dirname(__file__) + '/'
         # Get the list of backgrounds and RobotSets
         self.sets = self._listdirs(self.resourcedir + 'sets')
@@ -53,12 +53,12 @@ class Robohash(object):
         # This ensures that /Bear.png and /Bear.bmp will send back the same image, in different formats.
 
         if string.lower().endswith(('.png','.gif','.jpg','.bmp','.jpeg','.ppm','.datauri')):
-            format = string[string.rfind('.') +1 :len(string)] 
+            format = string[string.rfind('.') +1 :len(string)]
             if format.lower() == 'jpg':
-                    format = 'jpeg' 
-            self.format = format  
-            string = string[0:string.rfind('.')] 
-        return string        
+                    format = 'jpeg'
+            self.format = format
+            string = string[0:string.rfind('.')]
+        return string
 
 
     def _create_hashes(self,count):
@@ -71,7 +71,7 @@ class Robohash(object):
              blocksize = int(len(self.hexdigest) / count)
              currentstart = (1 + i) * blocksize - blocksize
              currentend = (1 +i) * blocksize
-             self.hasharray.append(int(self.hexdigest[currentstart:currentend],16))            
+             self.hasharray.append(int(self.hexdigest[currentstart:currentend],16))
 
     def _listdirs(self,path):
         return [d for d in natsort.natsorted(os.listdir(path)) if os.path.isdir(os.path.join(path, d))]
@@ -90,7 +90,7 @@ class Robohash(object):
                 if name[:1] is not '.':
                     directories.append(os.path.join(root, name))
                     directories = natsort.natsorted(directories)
-                    
+
         # Go through each directory in the list, and choose one file from each.
         # Add this file to our master list of robotparts.
         for directory in directories:
@@ -98,7 +98,7 @@ class Robohash(object):
             for imagefile in natsort.natsorted(os.listdir(directory)):
                 files_in_dir.append(os.path.join(directory,imagefile))
                 files_in_dir = natsort.natsorted(files_in_dir)
-                
+
             # Use some of our hash bits to choose which file
             element_in_list = self.hasharray[self.iter] % len(files_in_dir)
             chosen_files.append(files_in_dir[element_in_list])
@@ -125,7 +125,7 @@ class Robohash(object):
 
 
         # Only set1 is setup to be color-seletable. The others don't have enough pieces in various colors.
-        # This could/should probably be expanded at some point.. 
+        # This could/should probably be expanded at some point..
         # Right now, this feature is almost never used. ( It was < 44 requests this year, out of 78M reqs )
 
         if roboset == 'set1':
@@ -139,7 +139,7 @@ class Robohash(object):
         if bgset in self.bgsets:
             bgset = bgset
         elif bgset == 'any':
-            bgset = self.bgsets[ self.hasharray[2] % len(self.bgsets) ]                                                                                                
+            bgset = self.bgsets[ self.hasharray[2] % len(self.bgsets) ]
 
         # If we set a format based on extension earlier, use that. Otherwise, PNG.
         if format is None:
@@ -154,7 +154,7 @@ class Robohash(object):
         # For instance, the head has to go down BEFORE the eyes, or the eyes would be hidden.
 
         # First, we'll get a list of parts of our robot.
-        
+
 
         roboparts = self._get_list_of_files(self.resourcedir + 'sets/' + roboset)
         print(roboparts)
@@ -169,12 +169,12 @@ class Robohash(object):
                         if not ls.startswith("."):
                                 bglist.append(self.resourcedir + 'backgrounds/' + bgset + "/" + ls)
                 background = bglist[self.hasharray[3] % len(bglist)]
-    
+
         # Paste in each piece of the Robot.
         roboimg = Image.open(roboparts[0])
         roboimg = roboimg.resize((1024,1024))
         for png in roboparts:
-                img = Image.open(png) 
+                img = Image.open(png)
                 img = img.resize((1024,1024))
                 roboimg.paste(img,(0,0),img)
 
@@ -183,13 +183,13 @@ class Robohash(object):
                 #Flatten bmps
                 r, g, b, a = roboimg.split()
                 roboimg = Image.merge("RGB", (r, g, b))
-    
+
         if bgset is not None:
                 bg = Image.open(background)
                 bg = bg.resize((1024,1024))
                 bg.paste(roboimg,(0,0),roboimg)
-                roboimg = bg               
-                                             
-        self.img = roboimg.resize((sizex,sizey),Image.ANTIALIAS) 
+                roboimg = bg
+
+        self.img = roboimg.resize((sizex,sizey),Image.ANTIALIAS)
         self.format = format
 

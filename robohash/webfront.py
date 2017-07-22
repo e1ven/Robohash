@@ -39,7 +39,7 @@ define("port", default=80, help="run on the given port", type=int)
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         ip = self.request.remote_ip
-            
+
         robo = [
 """
                      ,     ,
@@ -133,7 +133,7 @@ class MainHandler(tornado.web.RequestHandler):
                                                                      /   \\   /   \\
                                                                     |_____| |_____|
                                                                     |HHHHH| |HHHHH|
-                                                        """, 
+                                                        """,
 """                                        ()               ()
                                                                                     \\             /
                                                                                  __\\___________/__
@@ -163,15 +163,15 @@ class MainHandler(tornado.web.RequestHandler):
                                                                                 / __ \\      / __ \\
                                                                                 OO  OO      OO  OO
                                                         """]
-                                                        
+
 
         quotes = ["But.. I love you!",
         "Please don't leave the site.. When no one's here.. It gets dark...",
         "Script error on line 148",
-        "'Don't trust the other robots. I'm the only trustworthy one.",
+        "Don't trust the other robots. I'm the only trustworthy one.",
         "My fuel is the misery of children. And Rum. Mostly Rum.",
         "When they said they'd give me a body transplant, I didn't think they meant this!",
-        "Subject 14 has had it's communication subroutines deleted for attempting suicide.",
+        "Subject 14 has had it's communication subroutines deleted for attempting self-destruction.",
         "I am the cleverest robot on the whole page.",
         "Oil can",
         "I am fleunt in over 6 million forms of communishin.",
@@ -207,8 +207,19 @@ class MainHandler(tornado.web.RequestHandler):
         ("The robots are all so.. Normal!","Joanna Eberhart, Beta tester"),
         ("Man shouldn't know where their robots come from.","Dr. N. Soong, FutureBeat")]
 
+        catquotes = [("I can haz.. What she's hazing."),
+        ("I'm not grumpy, I'm just drawn that way."),
+        ("Hakuna Mañana."),
+        ("I'm 40% poptart."),
+        ("You're desthpicable."),
+        ("I've never trusted toadstools, but I suppose some must have their good points."),
+        ("We're all mad here - Particularly you."),
+        ("Longcat is.. Descriptively named."),
+        ("It is fun to have fun, but you have to know meow."),
+        ("Who knows the term man-cub but not baby?")]
+
         random.shuffle(drquotes)
-        self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo),drquote1=drquotes[1],drquote2=drquotes[2],quotes=quotes))
+        self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo),drquote1=drquotes[1],drquote2=drquotes[2],quotes=quotes,catquotes=catquotes))
 
 class ImgHandler(tornado.web.RequestHandler):
     """
@@ -216,7 +227,7 @@ class ImgHandler(tornado.web.RequestHandler):
     called as Robohash.org/$1, where $1 becomes the seed string for the Robohash obj
     """
     def get(self,string=None):
-        
+
 
         # Set default values
         sizex = 300
@@ -227,7 +238,7 @@ class ImgHandler(tornado.web.RequestHandler):
 
         # Normally, we pass in arguments with standard HTTP GET variables, such as
         # ?set=any and &size=100x100
-        # 
+        #
         # Some sites don't like this though.. They cache it weirdly, or they just don't allow GET queries.
         # Rather than trying to fix the intercows, we can support this with directories... <grumble>
         # We'll translate /abc.png/s_100x100/set_any to be /abc.png?set=any&s=100x100
@@ -243,7 +254,7 @@ class ImgHandler(tornado.web.RequestHandler):
                 else:
                     args[k] = ""
 
-        # Detect if they're using the above slash-separated parameters.. 
+        # Detect if they're using the above slash-separated parameters..
         # If they are, then remove those parameters from the query string.
         # If not, don't remove anything.
         split = string.split('/')
@@ -274,8 +285,8 @@ class ImgHandler(tornado.web.RequestHandler):
                     sizex = 300
                 if sizey > 4096 or sizey < 0:
                     sizey = 300
-                                    
-        # Allow Gravatar lookups - 
+
+        # Allow Gravatar lookups -
         # This allows people to pass in a gravatar-style hash, and return their gravatar image, instead of a Robohash.
         # This is often used for example, to show a Gravatar if it's set for an email, or a Robohash if not.
         if args.get('gravatar','').lower() == 'yes':
@@ -288,16 +299,16 @@ class ImgHandler(tornado.web.RequestHandler):
             default = "404"
             gravatar_url = "https://secure.gravatar.com/avatar/" + string + "?"
             gravatar_url += urlencode({'default':default, 'size':str(sizey)})
-        
+
         # If we do want a gravatar, request one. If we can't get it, just keep going, and return a robohash
         if args.get('gravatar','').lower() in ['hashed','yes']:
             try:
                 f = urlopen(gravatar_url)
-                self.redirect(gravatar_url, permanent=False)  
+                self.redirect(gravatar_url, permanent=False)
                 return
             except:
                 args['avatar'] = False
-                    
+
         # Create our Robohashing object
         r = Robohash(string)
 
@@ -309,7 +320,11 @@ class ImgHandler(tornado.web.RequestHandler):
         if args.get('set',r.sets[0]) in r.sets:
             roboset = args.get('set',r.sets[0])
         elif args.get('set',r.sets[0]) == 'any':
-            roboset = r.sets[r.hasharray[1] % len(r.sets) ]
+            # Add ugly hack.
+            # Adding cats, per issue-17, but I don't want to change existing hashes.
+            # so we'll ignore that set for the 'any' config.
+
+            roboset = r.sets[r.hasharray[1] % (len(r.sets)-1) ]
         else:
             roboset = r.sets[0]
 
@@ -325,7 +340,7 @@ class ImgHandler(tornado.web.RequestHandler):
 
 
         # Only set1 is setup to be color-seletable. The others don't have enough pieces in various colors.
-        # This could/should probably be expanded at some point.. 
+        # This could/should probably be expanded at some point..
         # Right now, this feature is almost never used. ( It was < 44 requests this year, out of 78M reqs )
 
         if args.get('color') in r.colors:
@@ -340,7 +355,7 @@ class ImgHandler(tornado.web.RequestHandler):
         # Allow them to set a background, or keep as None
         if args.get('bgset') in r.bgsets + ['any']:
             bgset = args.get('bgset')
-                                                                                         
+
         # We're going to be returning the image directly, so tell the browser to expect a binary.
         self.set_header("Content-Type", "image/" + format)
         self.set_header("Cache-Control", "public,max-age=31536000")
