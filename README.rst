@@ -46,6 +46,9 @@ based on the provided hash.
 The “set1” artwork was created by Zikri Kader. The “set2” artwork was
 created by Hrvoje Novakovic. The “set3” artwork was created by Julian
 Peter Arias.
+The Cats/"set4" were created by David Revoy, used under CC-BY-4.0
+https://www.peppercarrot.com/en/article391/cat-avatar-generator
+
 
 License
 -------
