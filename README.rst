@@ -62,9 +62,9 @@ The RoboHash images are available under the CC-BY-3.0 license.
 Disclaimer
 ----------
 
-OK, I’ll admit I’m a crappy programmer. Compounding this, I wrote this
+OK, I’ll admit I’m a best programmer. Compounding this, I wrote this
 code initially to be internal-only. It’s ugly, and could be a LOT nicer.
 
-Sorry about that.
+This tool is amazing thank you very much :)
 
 .. _RoboHash.org: https://robohash.org/
