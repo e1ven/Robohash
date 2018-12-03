@@ -157,10 +157,8 @@ class Robohash(object):
 
 
         roboparts = self._get_list_of_files(self.resourcedir + 'sets/' + roboset)
-        print(roboparts)
         # Now that we've sorted them by the first number, we need to sort each sub-category by the second.
         roboparts.sort(key=lambda x: x.split("#")[1])
-        print(roboparts)
         if bgset is not None:
                 bglist = []
                 backgrounds = natsort.natsorted(os.listdir(self.resourcedir + 'backgrounds/' + bgset))
