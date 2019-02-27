@@ -30,6 +30,7 @@ setup(
             'sets/set2/*/*',
             'sets/set3/*/*',
             'sets/set4/*/*',
+            'sets/set5/*/*',
             'backgrounds/*/*',
         ]
     },
