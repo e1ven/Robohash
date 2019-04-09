@@ -218,16 +218,12 @@ class MainHandler(tornado.web.RequestHandler):
         ("It is fun to have fun, but you have to know meow."),
         ("Who knows the term man-cub but not baby?")]
         
-        avatarquotes = [("Believe me, I'm a doctor"),
-        ("Pretty and you know it."),
-        ("Nothing works unless I do it"),
-        ("I'm a voice not an echo"),
+        avatarquotes = [("I'm just here to fix the robots."),
+        ("Don't blame me, I tried to deactivate them."),
+        ("Don't believe the robot's lies - I do all the work around here."),
         ("Wanna play hide and seek?"),
-        ("Life is short, buy that shoes"),
-        ("Follow my dreams - we will be kings"),
-        ("My ambition is my power"),
         ("Look at my face my face is amazing"),
-        ("You are awesome")]
+        ("You are awesome, I don't care what anyone says.")]
 
         random.shuffle(drquotes)
         self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo),drquote1=drquotes[1],drquote2=drquotes[2],quotes=quotes,catquotes=catquotes,avatarquotes=avatarquotes))
@@ -332,10 +328,10 @@ class ImgHandler(tornado.web.RequestHandler):
             roboset = args.get('set',r.sets[0])
         elif args.get('set',r.sets[0]) == 'any':
             # Add ugly hack.
-            # Adding cats, per issue-17, but I don't want to change existing hashes.
-            # so we'll ignore that set for the 'any' config.
 
-            roboset = r.sets[r.hasharray[1] % (len(r.sets)-1) ]
+            # Adding cats and people per submitted/requested code, but I don't want to change existing hashes for set=any
+            # so we'll ignore those sets for the 'any' config.
+            roboset = r.sets[r.hasharray[1] % (len(r.sets)-2) ]
         else:
             roboset = r.sets[0]
 
