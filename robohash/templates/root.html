@@ -353,7 +353,7 @@ function submitform()
 <div class="hr"></div>
 
 <!-- *************************************************************************
-******************************  GALLERY3 SECTION  *****************************
+******************************  GALLERY4 SECTION  *****************************
 ************************************************************************** -->
 
 <!-- start of content section -->
@@ -378,6 +378,38 @@ function submitform()
             title="{{random.choice(catquotes)}}" class="fade"><img src="//robohash.org/{{c4}}&size=150x150" width="150" height="150" /></a></li>
             <li><a href="//robohash.org/{{c5}}" rel="prettyPhoto[gallery1]"
             title="{{random.choice(catquotes)}}" class="fade"><img src="//robohash.org/{{c5}}&size=150x150" width="150" height="150" /></a></li>
+  </ul>
+
+</div><!-- end of content section -->
+
+<div class="hr"></div>
+
+<!-- *************************************************************************
+******************************  GALLERY5 SECTION  *****************************
+************************************************************************** -->
+
+<!-- start of content section -->
+<div class="content_section">
+
+  <p>By appending ?set=set5 to our URLs, we can create beautiful avatars. </p>
+
+  <ul class="gallery">
+      {% set c1 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set5" %}
+      {% set c2 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set5" %}
+      {% set c3 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set5" %}
+      {% set c4 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set5" %}
+      {% set c5 = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(3)) + ".png?set=set5" %}
+
+      <li><a href="//robohash.org/{{c1}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(avatarquotes)}}" class="fade"><img src="//robohash.org/{{c1}}&size=150x150" width="150" height="150" /></a></li>
+      <li><a href="//robohash.org/{{c2}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(avatarquotes)}}" class="fade"><img src="//robohash.org/{{c2}}&size=150x150" width="150" height="150" /></a></li>
+            <li><a href="//robohash.org/{{c3}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(avatarquotes)}}" class="fade"><img src="//robohash.org/{{c3}}&size=150x150" width="150" height="150" /></a></li>
+            <li><a href="//robohash.org/{{c4}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(avatarquotes)}}" class="fade"><img src="//robohash.org/{{c4}}&size=150x150" width="150" height="150" /></a></li>
+            <li><a href="//robohash.org/{{c5}}" rel="prettyPhoto[gallery1]"
+            title="{{random.choice(avatarquotes)}}" class="fade"><img src="//robohash.org/{{c5}}&size=150x150" width="150" height="150" /></a></li>
   </ul>
 
 </div><!-- end of content section -->
@@ -579,7 +611,7 @@ function submitform()
 <div id="footer_left" style="margin-top:60px;">
 <p>
 Robohash contains robots created by Zikri Kader (set1), Hrvoje Novakovic (set2), and Julian Peter Arias (set3).<br>
-Cats are created by <a href="https://framagit.org/Deevad/cat-avatar-generator/tree/master">David Revoy</a>.
+Cats are created by <a href="https://framagit.org/Deevad/cat-avatar-generator/tree/master">David Revoy</a> and avataaars are created by <a href="https://twitter.com/pablostanley">Pablo Stanley</a>.
 <br>
 <p>
 You are free to embed under the terms of the CC-BY license. <br> Example wording might be "Robots lovingly delivered by

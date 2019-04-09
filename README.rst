@@ -38,7 +38,7 @@ Usage
 Robosets
 --------
 
-RoboHash comes with three image sets, named "set1", "set2", and "set3".
+RoboHash comes with five image sets, named "set1", "set2", "set3", "set4" and "set5".
 Specify which set you want in the ``assemble()`` method. Alternatively,
 specify the string "any", and RoboHash will pick an image set for you,
 based on the provided hash.
@@ -48,6 +48,7 @@ created by Hrvoje Novakovic. The "set3" artwork was created by Julian
 Peter Arias.
 The Cats/"set4" were created by David Revoy, used under CC-BY-4.0
 https://www.peppercarrot.com/en/article391/cat-avatar-generator
+The avatars used in "set5" were created by Pablo Stanley.
 
 
 License
