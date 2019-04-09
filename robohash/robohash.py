@@ -73,6 +73,12 @@ class Robohash(object):
              currentend = (1 +i) * blocksize
              self.hasharray.append(int(self.hexdigest[currentstart:currentend],16))
 
+        # Workaround for adding more sets in 2019.
+        # We run out of blocks, because we use some for each set, whether it's called or not.
+        # I can't easily change this without invalidating every hash so far :/
+        # This shouldn't reduce the security since it should only draw from one set of these in practice.
+        self.hasharray = self.hasharray + self.hasharray
+
     def _listdirs(self,path):
         return [d for d in natsort.natsorted(os.listdir(path)) if os.path.isdir(os.path.join(path, d))]
 

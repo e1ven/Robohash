@@ -217,8 +217,8 @@ class MainHandler(tornado.web.RequestHandler):
         ("Longcat is.. Descriptively named."),
         ("It is fun to have fun, but you have to know meow."),
         ("Who knows the term man-cub but not baby?")]
-		
-		avatarquotes = [("Believe me, I'm a doctor"),
+        
+        avatarquotes = [("Believe me, I'm a doctor"),
         ("Pretty and you know it."),
         ("Nothing works unless I do it"),
         ("I'm a voice not an echo"),
