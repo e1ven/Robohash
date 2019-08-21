@@ -32,7 +32,7 @@ Usage
     hash = "whatever-hash-you-want"
     rh = Robohash(hash)
     rh.assemble(roboset='any')
-    with open("path/to/new/file.png", "w") as f:
+    with open("path/to/new/file.png", "wb") as f:
         rh.img.save(f, format="png")
 
 Robosets
