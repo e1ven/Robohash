@@ -43,13 +43,6 @@ Specify which set you want in the ``assemble()`` method. Alternatively,
 specify the string "any", and RoboHash will pick an image set for you,
 based on the provided hash.
 
-The "set1" artwork was created by Zikri Kader. The "set2" artwork was
-created by Hrvoje Novakovic. The "set3" artwork was created by Julian
-Peter Arias.
-The Cats/"set4" were created by David Revoy, used under CC-BY-4.0
-https://www.peppercarrot.com/en/article391/cat-avatar-generator
-The avatars used in "set5" were created by Pablo Stanley.
-
 
 License
 -------
@@ -58,7 +51,25 @@ The Python Code is available under the MIT/Expat license. See the
 ``LICENSE.txt`` file for the full text of this license. Copyright (c)
 2011, Colin Davis.
 
-The RoboHash images are available under the CC-BY-3.0 license.
+The RoboHash images are available under license-
+
+The "set1" artwork was created by Zikri Kader. 
+They are available under CC-BY-3.0 or CC-BY-4.0 license.
+
+The "set2" artwork was created by Hrvoje Novakovic. 
+They are available under CC-BY-3.0 license.
+
+The "set3" artwork was created by Julian Peter Arias.
+They are available under CC-BY-3.0 license.
+
+The Cats/"set4" were created by David Revoy, used under CC-BY-4.0
+https://www.peppercarrot.com/en/article391/cat-avatar-generator
+
+The avatars used in "set5" were created by Pablo Stanley, for https://avataaars.com/  
+They are "Free for personal and commercial use. 😇"
+
+
+
 
 Disclaimer
 ----------
