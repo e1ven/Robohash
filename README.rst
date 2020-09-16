@@ -51,9 +51,12 @@ The Python Code is available under the MIT/Expat license. See the
 ``LICENSE.txt`` file for the full text of this license. Copyright (c)
 2011, Colin Davis.
 
-The RoboHash images are available under license-
+Feel free to embed the Robohash images, host your own instance of Robohash, 
+or integrate them into your own project.
+If you do, please just mention where they came from :) 
+Example wording might be "Robots lovingly delivered by Robohash.org" or similar. 
 
-The "set1" artwork was created by Zikri Kader. 
+The "set1" artwork (and robohash backgrounds) were created by Zikri Kader. 
 They are available under CC-BY-3.0 or CC-BY-4.0 license.
 
 The "set2" artwork was created by Hrvoje Novakovic. 
