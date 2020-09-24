@@ -93,7 +93,7 @@ class Robohash(object):
         directories = []
         for root, dirs, files in natsort.natsorted(os.walk(path, topdown=False)):
             for name in dirs:
-                if name[:1] is not '.':
+                if name[:1] != '.':
                     directories.append(os.path.join(root, name))
                     directories = natsort.natsorted(directories)
 
