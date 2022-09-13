@@ -12,8 +12,8 @@ setup(
     version='1.0',
     description='One of the leading robot-based hashing tools on the web',
     long_description=long_description,
-    author='Colin Davis',
-    author_email='colin@robohash.org',
+    author='e1ven',
+    author_email='robo@robohash.org',
     url='https://github.com/e1ven/Robohash',
     download_url='https://github.com/e1ven/Robohash/tarball/1.0',
     keywords=['robots'], # arbitrary keywords

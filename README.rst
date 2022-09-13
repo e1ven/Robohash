@@ -49,7 +49,7 @@ License
 
 The Python Code is available under the MIT/Expat license. See the
 ``LICENSE.txt`` file for the full text of this license. Copyright (c)
-2011, Colin Davis.
+2011.
 
 Feel free to embed the Robohash images, host your own instance of Robohash, 
 or integrate them into your own project.
