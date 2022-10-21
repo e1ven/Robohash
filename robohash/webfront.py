@@ -235,7 +235,6 @@ class ImgHandler(tornado.web.RequestHandler):
     """
     def get(self,string=None):
 
-
         # Set default values
         sizex = 300
         sizey = 300
@@ -250,16 +249,17 @@ class ImgHandler(tornado.web.RequestHandler):
         # Rather than trying to fix the intercows, we can support this with directories... <grumble>
         # We'll translate /abc.png/s_100x100/set_any to be /abc.png?set=any&s=100x100
         # We're using underscore as a replacement for = and / as a replacement for [&?]
-
         args = self.request.arguments.copy()
 
         for k in list(args.keys()):
             v = args[k]
             if type(v) is list:
                 if len(v) > 0:
-                    args[k] = args[k][0]
+                    args[k] = args[k][0].decode('utf-8')
                 else:
                     args[k] = ""
+            if type(v) is bytes:
+                args[k] = v.decode('utf-8')
 
         # Detect if they're using the above slash-separated parameters..
         # If they are, then remove those parameters from the query string.
@@ -285,7 +285,7 @@ class ImgHandler(tornado.web.RequestHandler):
 
         # Split the size variable in to sizex and sizey
         if "size" in args:
-                sizex,sizey = args['size'].split("x")
+                sizex,sizey = args.get('size').split("x")
                 sizex = int(sizex)
                 sizey = int(sizey)
                 if sizex > 4096 or sizex < 0:
