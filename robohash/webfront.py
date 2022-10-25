@@ -299,7 +299,7 @@ class ImgHandler(tornado.web.RequestHandler):
         if args.get('gravatar','').lower() == 'yes':
             # They have requested that we hash the email, and send it to Gravatar.
             default = "404"
-            gravatar_url = "https://secure.gravatar.com/avatar/" + hashlib.md5(string.lower()).hexdigest() + "?"
+            gravatar_url = "https://secure.gravatar.com/avatar/" + hashlib.md5(string.lower().encode('utf-8')).hexdigest() + "?"
             gravatar_url += urlencode({'default':default, 'size':str(sizey)})
         elif args.get('gravatar','').lower() == 'hashed':
             # They have sent us a pre-hashed email address.
