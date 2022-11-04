@@ -183,17 +183,17 @@ class Robohash(object):
                 img = img.resize((1024,1024))
                 roboimg.paste(img,(0,0),img)
 
-        # If we're a BMP, flatten the image.
-        if format == 'bmp':
-                #Flatten bmps
-                r, g, b, a = roboimg.split()
-                roboimg = Image.merge("RGB", (r, g, b))
-
         if bgset is not None:
                 bg = Image.open(background)
                 bg = bg.resize((1024,1024))
                 bg.paste(roboimg,(0,0),roboimg)
                 roboimg = bg
+
+        # If we're a BMP, flatten the image.
+        if format in ['bmp','jpeg']:
+                #Flatten bmps
+                r, g, b, a = roboimg.split()
+                roboimg = Image.merge("RGB", (r, g, b))
 
         self.img = roboimg.resize((sizex,sizey),Image.ANTIALIAS)
         self.format = format
