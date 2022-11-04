@@ -16,6 +16,9 @@ class Robohash(object):
         Takes in the string to make a Robohash out of.
         """
 
+        # Default to png
+        self.format = 'png'
+
         # Optionally remove an images extension before hashing.
         if ignoreext is True:
             string = self._remove_exts(string)
@@ -41,7 +44,6 @@ class Robohash(object):
 
         # Get the colors in set1
         self.colors = self._listdirs(self.resourcedir + 'sets/set1')
-        self.format = 'png'
 
     def _remove_exts(self,string):
         """
@@ -93,7 +95,7 @@ class Robohash(object):
         directories = []
         for root, dirs, files in natsort.natsorted(os.walk(path, topdown=False)):
             for name in dirs:
-                if name[:1] is not '.':
+                if name[:1] != '.':
                     directories.append(os.path.join(root, name))
                     directories = natsort.natsorted(directories)
 
@@ -117,7 +119,6 @@ class Robohash(object):
         Build our Robot!
         Returns the robot image itself.
         """
-
         # Allow users to manually specify a robot 'set' that they like.
         # Ensure that this is one of the allowed choices, or allow all
         # If they don't set one, take the first entry from sets above.

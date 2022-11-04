@@ -280,9 +280,7 @@ class ImgHandler(tornado.web.RequestHandler):
 
         # Detect if the user has passed in a flag to ignore extensions.
         # Pass this along to to Robohash obj later on.
-
-        ignoreext = args.get('ignoreext','false').lower() == 'true'
-
+        ignoreext = args.get('ignoreext','true').lower() == 'true'
         # Split the size variable in to sizex and sizey
         if "size" in args:
                 sizex,sizey = args.get('size').split("x")
@@ -317,8 +315,7 @@ class ImgHandler(tornado.web.RequestHandler):
                 args['avatar'] = False
 
         # Create our Robohashing object
-        r = Robohash(string)
-
+        r = Robohash(string=string,ignoreext=ignoreext)
 
         # Allow users to manually specify a robot 'set' that they like.
         # Ensure that this is one of the allowed choices, or allow all
@@ -364,11 +361,11 @@ class ImgHandler(tornado.web.RequestHandler):
             bgset = args.get('bgset')
 
         # We're going to be returning the image directly, so tell the browser to expect a binary.
-        self.set_header("Content-Type", "image/" + format)
+        self.set_header("Content-Type", "image/" + r.format)
         self.set_header("Cache-Control", "public,max-age=31536000")
 
         # Build our Robot.
-        r.assemble(roboset=roboset,format=format,bgset=bgset,color=color,sizex=sizex,sizey=sizey)
+        r.assemble(roboset=roboset,format=r.format,bgset=bgset,color=color,sizex=sizex,sizey=sizey)
 
         # Print the Robot to the handler, as a file-like obj
         if r.format != 'datauri':

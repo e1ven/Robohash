@@ -1,2 +1,11 @@
+User-agent: SpiritRover
+Allow: Finally-coming-home
+
+User-agent: T-1000
+Allow: Liquid-metal-form
+
+User-agent: WALL-E
+Allow: Rebuilding-with-EVE
+
 User-agent: *
 Allow: /
