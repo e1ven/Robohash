@@ -195,6 +195,6 @@ class Robohash(object):
                 r, g, b, a = roboimg.split()
                 roboimg = Image.merge("RGB", (r, g, b))
 
-        self.img = roboimg.resize((sizex,sizey),Image.ANTIALIAS)
+        self.img = roboimg.resize((sizex,sizey),Image.LANCZOS)
         self.format = format
 
