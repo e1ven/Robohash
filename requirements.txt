@@ -2,6 +2,6 @@
 # To regenerate, run:
 #    pip-compile requirements.in
 #
-pillow==9.1.1
-tornado==6.1
 natsort==8.1.0
+pillow==9.1.1
+tornado==6.4.2
