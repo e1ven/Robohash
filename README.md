@@ -17,35 +17,31 @@ There are several ways to use Robohash, depending on your needs:
 The easiest way to use Robohash is through the public service at [robohash.org](https://robohash.org/).
 
 Super Easy to use: Anytime you need a Robohash, just embed:
+
 ```html
-<img src="https://robohash.org/YOUR-TEXT.png">
+<img src="https://robohash.org/YOUR-TEXT.png" />
 ```
 
 **URL Parameters and Advanced Options:**
 
 - **Image Formats**: Want a JPG instead? Fine. PNG? Fine. Want it as a bitmap? We think you're nutty. But fine.
   Just change the extension: `https://robohash.org/hash.jpg`
-  
 - **Size Control**: From destroying skyscrapers to nanobots, we've got you covered.
   `https://robohash.org/hash?size=200x200`
-  
 - **Robot Sets**: Choose your preferred mechanical beings:
   `https://robohash.org/hash?set=set2` (set1-set5 available, or "any")
-  
 - **Backgrounds**: Our robots like to travel. Add a background as part of the hash:
   `https://robohash.org/hash?bgset=bg1` (bg1-bg2 available, or "any")
-  
 - **Gravatar Integration**: For Gravatar enthusiasts, you can ask Robohash to use a Gravatar if one is available:
   `https://robohash.org/user@example.com?gravatar=yes`
   or for pre-hashed emails: `https://robohash.org/hash?gravatar=hashed`
-  
 - **Directory Style Parameters**: We also accept commands via directory structure:
   `https://robohash.org/set_set3/bgset_bg1/3.14159?size=500x500`
-  
 - **Extension Handling**: Want to hash the whole URL including extension? Use:
   `https://robohash.org/hash.png?ignoreext=false`
 
 **Important Notes:**
+
 - Robohash.org is a best-effort service, not a commercial offering
 - Our robots stay speedy due to caching modules and CDN usage
 - If you receive errors or "too many requests" responses, please back off exponentially
@@ -163,6 +159,8 @@ RoboHash comes with five distinct sets of mechanical/biological entities:
 - **set3**: Robot heads created by Julian Peter Arias. New, suave, disembodied heads. That's sexy. Like a robot.
 - **set4**: Cats created by David Revoy. Hydroponically grown beautiful kittens.
 - **set5**: Human avatars created by Pablo Stanley. For those afraid of the robocalypse, you can also generate human technicians to mind the robot army.
+- **set6**: Cosmic Apes created by OceanSlim. Monkeying around with the fabric of space-time itself.
+  - Note: This set uses additional symbolic links to implement weighted rarity distribution as the creator originally intended. Apes with laser eyes and tear drop tattoos are exceptionally rare.
 
 Specify which set you want in the `assemble()` method or through URL parameters. Alternatively, specify the string "any", and RoboHash will pick an image set for you, based on the provided hash.
 
@@ -183,6 +181,7 @@ Robohash contains art from various talented creators:
 - The "set3" artwork was created by Julian Peter Arias. They are available under CC-BY-3.0 license.
 - The Cats/"set4" were created by David Revoy, used under CC-BY-4.0 https://www.peppercarrot.com/extras/html/2016_cat-generator/
 - The avatars used in "set5" were created by Pablo Stanley, for https://avataaars.com/. They are "Free for personal and commercial use. 😇"
+- The Cosmic Apes/"set6" were created by [OceanSlim](https://github.com/0ceanSlim). They are available under CC0 (Public Domain).
 
 You are free to embed robots under the terms of the CC-BY license. Example wording might be "Robots lovingly delivered by Robohash.org" or something similarly respectful of our robotic overlords.
 
