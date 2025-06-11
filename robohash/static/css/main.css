@@ -10,11 +10,13 @@
 	}
 
 body {
-	background-image:url(../img/page_bground.jpg);
-	margin: 0px;
-	padding: 0px;
-	background-repeat:repeat-x;
-	}
+	background-image: url(../img/page_bground.jpg);
+	background-color: #2c2c2c; /* fallback dark background */
+	background-repeat: repeat-x;
+	margin: 0;
+	padding: 0;
+	min-height: 100vh; /* ensure background fills the whole screen */
+}
 	
 p {
 	font-family:MyriadProRegular, Helvetica, sans-serif;
@@ -87,13 +89,15 @@ div.hr {
 	margin-bottom: 30px;
 	}
 	
-.footer_heading {
-	font-family:MyriadProRegular, Helvetica, sans-serif;
-	font-size:24px;
-	color: #afb0b4;
-	text-shadow:#000000 1px 1px 0px;
-	letter-spacing:-.05em;
-	}
+#footer_full {
+  width: 100%;
+  font-family: MyriadProRegular, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #afb0b4;
+  text-shadow: #000000 -1px -1px 0px;
+  padding: 60px 0;
+}
+
 	
 	
 .large_quote {
