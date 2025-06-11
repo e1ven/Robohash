@@ -215,8 +215,19 @@ class MainHandler(tornado.web.RequestHandler):
         ("Look at my face my face is amazing"),
         ("You are awesome, I don't care what anyone says.")]
 
+
+        gorillaquotes = [("That's Sergeant Koko to you!"),
+        ("Beegle says purple is a perfectly normal ape color"),
+        ("I'm more like a Prince Kong."),
+        ("If you ask me, naming a gorilla after a donkey is a little insulting"),
+        ("Imagination is the essence of discovery"),
+        ("Me Tarzan, you... wait, that's backwards"),
+        ("Gorillaz was the original Hatsune Miku"),
+        ("Yeah, I'm pretty sure I could take 100 guys"),
+        ("Caesar is homepage.")]
+
         random.shuffle(drquotes)
-        self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo),drquote1=drquotes[1],drquote2=drquotes[2],quotes=quotes,catquotes=catquotes,avatarquotes=avatarquotes))
+        self.write(self.render_string('templates/root.html',ip=ip,robo=random.choice(robo),drquote1=drquotes[1],drquote2=drquotes[2],quotes=quotes,catquotes=catquotes,avatarquotes=avatarquotes,gorillaquotes=gorillaquotes))
 
 class ImgHandler(tornado.web.RequestHandler):
     """
