@@ -4,4 +4,4 @@
 #
 natsort==8.1.0
 pillow==10.3.0
-tornado==6.5.1
+tornado==6.5.5
