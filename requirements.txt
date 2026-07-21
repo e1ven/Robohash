@@ -3,5 +3,5 @@
 #    pip-compile requirements.in
 #
 natsort==8.1.0
-pillow==10.3.0
+pillow==12.3.0
 tornado==6.5.5
